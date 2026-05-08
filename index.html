@@ -3,34 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/style.css">
     <title>Designguide RAD</title>
 </head>
 <body>
-    <header>
-        <nav>
+    <nav>
+        <div class="navbar">
             <a href="#" id="home-nav">Start</a>
-            <a href="#" id="design-guides-nav dropdown">Design riktlinjer</a>
-            <div class="dropdown-content">
-                <a href="#" id="logo-nav">Loggor</a>
-                <a href="#" id="color-scheme-nav">Färgschema</a>
-                <a href="#" id="text-nav">Text</a>
-                <!-- rubriker och brödtext -->
+            <div class="dropdown">
+                <button class="dropbtn" id="design-guidelines-nav">Designriktlinjer
+                </button>                
+                <div class="dropdown-content">
+                    <a href="#" id="logo-nav">Loggor</a>
+                    <a href="#" id="color-scheme-nav">Färgschema</a>
+                    <a href="#" id="text-nav">Text</a> <!-- rubriker och brödtext -->
+                </div>
             </div>
-            <a href="#" id="web-components-nav dropdown">Webb komponenter</a>
-            <div class="dropdown-content">
-                <a href="#" id="button-nav">Knappar</a>
-                <a href="#" id="tabel-nav">Tabeller</a>
-                <a href="#" id="navigation-nav">Menyer</a>
-                <a href="#" id="alert-nav">Meddelande/Varning</a>
-                <a href="#" id="loading-nav">Laddning</a>
-                <a href="#" id="panel-nav">Paneler</a>
-                <a href="#" id="form-nav">Formulär</a>
+            <div class="dropdown">
+                <button class="dropbtn" id="web-components-nav">Webb komponenter</button>
+                <div class="dropdown-content">
+                    <a href="#/button" id="button-nav">Knappar</a>
+                    <a href="#" id="tabel-nav">Tabeller</a>
+                    <a href="#" id="navigation-nav">Menyer</a>
+                    <a href="#" id="alert-nav">Meddelande/Varning</a>
+                    <a href="#" id="loading-nav">Laddning</a>
+                    <a href="#" id="panel-nav">Paneler</a>
+                    <a href="#" id="form-nav">Formulär</a>
+                </div>
             </div>
-        </nav>
-    </header>
-    <main class="content">
+        </div>
+    </nav>
+    <main id="content">
+        <p>hej detta är brödtext</p>
         <!-- main content goes here -->
     </main>
+    <script src="/script.js"></script>
 </body>
 </html>
