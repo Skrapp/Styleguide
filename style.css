@@ -3,7 +3,9 @@
     font-family: Arial, Helvetica, sans-serif;
     --bg-color: rgb(244, 242, 234);
     --primary-color:rgb(255, 179, 25);
+    --primary-color-darker:rgb(224, 143, 22);
     --secondary-color:rgb(255, 225, 148);
+    --neutral-color:lightgray;
     --accent-color:rgb(22, 65, 106);
     --text-focus-btn:rgb(106, 62, 22);
     --text-color-dark:rgb(19, 19, 19);
@@ -23,31 +25,39 @@
 }
 
 body{
-    width: 90%;
-    margin: 0 auto;
+    width: 100%;
     max-width: 70em;
+    margin: 0 auto;
+
+    font-family: "Raleway", sans-serif;
+    font-style: normal;
     color: var(--text-color-dark);
+
     background-color: var(--bg-color);
 }
 
-/* h1{
+main{
+    padding: 1em;
+}
 
-} */
 
- /* Navbar container */
-.navbar {
-    overflow: hidden;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+nav{
+    font-family: "Oswald", sans-serif;
     font-size: 1.2em;
     font-weight: 600;
+}
+ /* Navbar container */
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
     background-color:var(--secondary-color);
-
+    
 }
 
 /* Links inside the navbar */
-.navbar a {
-    float: left;
+nav a {
     text-decoration: none;
     color: var(--text-color-dark);
 }
@@ -62,18 +72,16 @@ body{
 
 /* The dropdown container */
 .dropdown {
-    float: left;
-    overflow: hidden;
+    position: relative;
 }
 
 /* Dropdown button */
 .dropdown .dropbtn {
-    background-color: inherit;
     font-family: inherit; 
     font-weight: inherit;
-    font-size: inherit;
+    font-size: inherit; 
     margin: 0; 
-    cursor: pointer;
+    display: block;
 }
 
 /* Add a red background color to navbar links on hover */
@@ -85,28 +93,88 @@ body{
 
 /* Dropdown content (hidden by default) */
 .dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
 }
 
 /* Links inside the dropdown */
 .dropdown-content a {
-  float: none;
-  text-decoration: none;
-  display: block;
-  text-align: left;
+    font-size: 1em;
+    font-weight: 500;
+    text-decoration: none;
+    display: block;
+    text-align: left;
 }
 
 /* Add a grey background color to dropdown links on hover */
 .dropdown-content a:hover {
-  background-color: #ddd;
+    background-color: #ddd;
 }
 
 /* Show the dropdown menu on hover */
 .dropdown:hover .dropdown-content {
+    display: block;
+}
+
+h1{
+    font-family: "Oswald", sans-serif;
+    font-weight: bold;
+}
+h2{
+    font-family: "Oswald", sans-serif;
+    font-weight: 400;
+}
+h3{
+    font-family: "Oswald", sans-serif;
+    font-weight: 400;
+}
+
+button{
+    font-family: "Raleway", sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    background-color: var(--primary-color);
+    color: var(--text-color-light);
+    border: none;
+    border-radius: 0.75em;
+    padding: 0.75em 1.25em;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: var(--primary-color-darker);
+    color: var(--text-focus-btn);
+}
+
+pre code {
+  background-color: #eee;
+  border-radius: 1em;
+  border: 1px solid white;
   display: block;
+  padding: 20px;
+}
+
+.code-container{
+    display: flex;
+    flex-flow: row wrap;
+    align-items:end;
+    gap: 1em;
+}
+
+.code-block{
+    padding: 1em;
+    border-radius: 1em;
+    background-color: lightgrey;
+    
+}
+
+code{
+    text-wrap: wrap;
+    word-break: break-all;
 }

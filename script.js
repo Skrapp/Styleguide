@@ -1,5 +1,6 @@
 function getHomePage(){
     return `<h1>Welcome home</h1>
+    <h2>subtitel</h2>
     <p>homepage</p>`;
 }
 
@@ -10,13 +11,13 @@ function getWebComponentsPage(){
 
 const routes = {
     '#/': getHomePage,
-    '#/button': getWebComponentsPage
+    '#/web-components': getWebComponentsPage
 };
 
 function handleRoute() {
     const hash = window.location.hash || '#/'; // Default to home if no hash
     const content = routes[hash] ? routes[hash]() : '<h1>Page Not Found</h1>';
-    document.getElementById('content').innerHTML = content;
+   // document.getElementById('content').innerHTML = content;
 }
 
 // Listen for navigation events
