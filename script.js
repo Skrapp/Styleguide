@@ -43,7 +43,7 @@ function getTextPage(){
     return `<h1>Rubriker och text</h1>
         <p>Dessa typsnitt och storlekar används över alla RAD:s webbplattformar. De typsnitt som används är "Raleway" och "Oswald". 
             Båda hämtas från <a href="https://fonts.google.com/" target="_blank"> Google APIs </a>. Om typsnitten inte funkar ska det falla tillbaka till "sans-serif"</p>
-        <img src="/imgs/Exempel text.png" alt="Bild av typsnitt vid olika andvändningar, navigation, rubriker, brödtext och knappar">
+        <img class="example-img" src="/imgs/Exempel text.png" alt="Bild av typsnitt vid olika andvändningar, navigation, rubriker, brödtext och knappar">
         <h2>Kom igång</h2>
         <p>För att komma igång inkludera detta i projektet</p>
         <div class="code-container">
@@ -171,7 +171,7 @@ button .dark:hover{
 function getButtonPage(){
     return `<h1>Knappar</h1>
         <p>Knappar används för flertalet olika situationer, så som formulär eller Call-to-Action element. Beroende på funktion och placering används olika knappar på RAD:s webbplattformar.</p>
-        <img src="imgs/exempel knappar.png" alt="Bild på hur knappar kan se ut i olika situationer">
+        <img class="example-img" src="imgs/exempel knappar.png" alt="Bild på hur knappar kan se ut i olika situationer">
         
         <h2>Kom igång</h2>
         <p>För att komma igång inkludera detta i projektet.</p>
@@ -201,7 +201,7 @@ button{
     border-radius: 0;
 }
 
-.dark-btn{
+button.dark{
     background-color: var(--accent-color);
 }
 
@@ -226,10 +226,13 @@ button:hover,
 button:focus {
     background-color: var(--primary-color-darker);
     color: var(--text-color-light-btn-hover);
+
+    transition: background 0.2s ease;
+
 }
 
-.dark-btn:hover,
-.dark-btn:focus-within{
+button.dark:hover,
+button.dark:focus-within{
     background-color: var(--accent-color-darker);
 }
 
@@ -258,9 +261,9 @@ button:focus {
         
         <hr>
         <h3>Alternativ färg</h3>
-        <button class="dark-btn">Klicka mig</button>
+        <button class="dark">Klicka mig</button>
         <p>Alternativt kan den mörkare varianten av knappen användas, här används <code>--accent-color</code> istället för <code>--primary-color</code>. </p>
-        <p>Använd klassen <code>dark-btn</code> för att få denna styling.</p>
+        <p>Använd klassen <code>dark</code> för att få denna styling.</p>
 
         <hr>
         <h3>Funktions knappar</h3>
@@ -285,19 +288,602 @@ button:focus {
 `
 }
 
+function getTablePage(){
+    return `<h1>Tabeller</h1>
+        <p>RAD använder två olika typer av tabeller, en för fåtal kolumner och en för många kolumner.</p>
+        <img class="example-img" src="/imgs/exempel tabell.png" alt="Bild på två exempel av tabeller">
+        <h2>Kom igång</h2>
+        <p>För att komma igång inkludera detta i projektet.</p>
+        <div class="code-container">
+            <div class="code-block">
+                <p><b>HTML:</b> struktur av tabell</p>
+                <pre>
+                    <code>&lt;table class="class-name"&gt;
+    &lt;thead&gt;
+        &lt;tr&gt;
+            &lt;th&gt;titel1&lt;/th&gt;
+            &lt;th&gt;titel2&lt;/th&gt;
+        &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+        &lt;tr&gt;
+            &lt;td&gt;data1.1&lt;/td&gt;
+            &lt;td&gt;data1.2&lt;/td&gt;
+        &lt;/tr&gt;
+    &lt;/tbody&gt;
+&lt;/table&gt;</code>
+                </pre>
+                <button class="code-btn">Kopiera kod</button>
+            </div>
+            <div class="code-block">
+                <p><b>CSS</b></p>
+                <pre>
+                    <code>/* Table */
+table {
+    min-width: 400px;
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+
+    background-color: white;
+
+    border-radius: 1em;
+}
+
+/* Header */
+thead {
+    background-color: var(--primary-color);
+    color: var(--text-color-light);
+}
+
+th {
+    padding: 1rem 1rem 0.5rem;
+    text-align: left;
+    font-weight: bold;
+}
+
+/* Body */
+td {
+    padding: 1.3rem 1rem;
+    border-bottom: solid 1px var(--neutral-color);
+    border-left: solid 1px var(--neutral-color);
+}
+
+/* Zebra stripes */
+tbody tr:nth-child(even) {
+    background-color: var(--neutral-color-lighter);
+}
+
+/* Hover effect */
+tbody tr:hover {
+    background-color: var(--neutral-color);
+    transition: background 0.2s ease;
+}
+
+tbody tr:hover td {
+    border-left-color: var(--neutral-color-lighter);
+}
+/* No left border on first column */
+tbody td:first-child{
+    border-left: none;
+}
+
+/* No bottom border on last row */
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+table.dark thead{
+    background-color: var(--accent-color);
+}
+
+.airy-table th{
+    padding: 2rem 5vw 1rem;
+    text-align: center;
+}
+.airy-table td{
+    border-left: none;
+    padding: 2rem 5vw;
+    text-align: center;
+}
+
+.compact-table{
+    border-radius: 0.5em;
+}
+.compact-table th,
+.compact-table td{
+    padding: 0.5rem 0.3rem;
+}</code>
+                </pre>
+                <button class="code-btn">Kopiera kod</button>
+            </div>
+        </div>
+        <h2>Användning</h2>
+        <p>Nedan visas exempel på hur de olika elementen används och ser ut i nuvarande webbläsare.</p>
+
+        <h3>Standard</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Boktitel</th>
+                    <th>Författare</th>
+                    <th>Pris</th>
+                    <th>Sidor</th>
+                    <th>År</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Rollspel i teori och praktik</td>
+                    <td>Björn Nilsson,Anna-Karin Waldemarson</td>
+                    <td>150 kr</td>
+                    <td>146</td>
+                    <td>1988</td>
+                </tr>
+                <tr>
+                    <td>Skapa vidd</td>
+                    <td>Håkan Sandh (red)</td>
+                    <td>200 kr</td>
+                    <td>103</td>
+                    <td>2003</td>
+                </tr>
+                <tr>
+                    <td>Kreativa metoder</td>
+                    <td>Katrin Byréus</td>
+                    <td>200 kr</td>
+                    <td>232</td>
+                    <td>2012</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>Som standard används denna styling, en balans mellan luftighet och kompakt.</p>
+        <p>Denna styling kräver ingen klass, se till att använda rätt struktur när du bygger upp tabellerna.</p>
+
+        <hr>
+        <h3>Fåtal kolumner</h3>
+        <table class="airy-table">
+            <thead>
+                <tr>
+                    <th>Medlemskap</th>
+                    <th>Auktoriserad</th>
+                    <th>Årsavgift</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Standard</td>
+                    <td>Ja</td>
+                    <td>350 kr</td>
+                </tr>
+                <tr>
+                    <td>Student</td>
+                    <td>Nej</td>
+                    <td>150 kr</td>
+                </tr>
+                <tr>
+                    <td>Pensionär</td>
+                    <td>Nej</td>
+                    <td>150 kr</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>Denna styling används för kolumner med tre eller färre kolumner. Denna styling har mer luft. Tänk på att inte använda för mycket text i blocken.</p>
+        <p>Använd klassen <code>airy-table</code> på table elementet för att använda denna styling.</p>
+    
+        <hr>
+        <h3>Kompakt</h3>
+        <table class="compact-table">
+            <thead>
+                <tr>
+                    <th>Övning</th>
+                    <th>Syfte</th>
+                    <th>Åldersgrupp</th>
+                    <th>Tidsåtgång</th>
+                    <th>Material</th>
+                    <th>Fokusområde</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>Statyövning</td>
+                    <td>Träna kroppsspråk och samarbete</td>
+                    <td>10-15 år</td>
+                    <td>20 min</td>
+                    <td>Inget</td>
+                    <td>Icke-verbal kommunikation</td>
+                </tr>
+                <tr>
+                    <td>Forumspel</td>
+                    <td>Utforska konflikter och lösningar</td>
+                    <td>13-18 år</td>
+                    <td>45 min</td>
+                    <td>Stolar och öppet golv</td>
+                    <td>Konflikthantering</td>
+                </tr>
+                <tr>
+                    <td>Improvisation</td>
+                    <td>Utveckla spontanitet och kreativitet</td>
+                    <td>Alla åldrar</td>
+                    <td>30 min</td>
+                    <td>Inget</td>
+                    <td>Kreativt uttryck</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>Denna styling används för tabeller med mycket info och/eller många kolumner</p>
+        <p>Använd klassen <code>compact-table</code> på table elementet för att använda denan styling.</p>
+
+        <hr>
+        <h3>Alternativ färg</h3>
+        <table class="dark">
+            <thead>
+                <tr>
+                    <th>Övning</th>
+                    <th>Syfte</th>
+                    <th>Fokusområde</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>Statyövning</td>
+                    <td>Träna kroppsspråk och samarbete</td>
+                    <td>Icke-verbal kommunikation</td>
+                </tr>
+                <tr>
+                    <td>Forumspel</td>
+                    <td>Utforska konflikter och lösningar</td>
+                    <td>Konflikthantering</td>
+                </tr>
+                <tr>
+                    <td>Improvisation</td>
+                    <td>Utveckla spontanitet och kreativitet</td>
+                    <td>Kreativt uttryck</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>Alla tabeller kan få en annan färg. Använd klassen <code>dark</code> på table elementet.</p>
+        </table>`
+}
+
+function getMenuPage(){
+    return`<h1>Menyer</h1>
+        <p>Navigation sker främst i huvudmenyn.</p>
+        <img class="example-img" src="imgs/exempel meny.png" alt="Bild på navigationsmenyn på denna sida">
+        <h2>Kom igång</h2>
+        <p>För att komma igång inkludera detta i projektet.</p>
+        <div class="code-container">
+            <div class="code-block">
+                <p><b>HTML:</b> struktur av huvudmeny</p>
+                <pre>
+                    <code>&lt;header&gt;
+    &lt;nav&gt;
+        &lt;img   src=&quot;/imgs/Logga RAD ruta.png&quot; alt=&quot;RAD logga&quot; height=&quot;70&quot;&gt;
+        &lt;a href=&quot;#&quot; id=&quot;home-nav&quot;&gt;Hem&lt;/a&gt;
+        &lt;a href=&quot;länk&quot; id=&quot;navigation-1-nav&quot;&gt;Navigation1&lt;/a&gt;
+        &lt;div class=&quot;dropdown&quot;&gt;
+            &lt;a class=&quot;dropbtn&quot; id=&quot;navigation-2-nav&quot;
+                href=&quot;länk&quot;&gt;Navigation2 &lt;i class=&quot;bi bi-caret-down-fill&quot;&gt;&lt;/i&gt;
+            &lt;/a&gt;                
+            &lt;div class=&quot;dropdown-content&quot;&gt;
+                &lt;a href=&quot;länk&quot; id=&quot;navigation-3-nav&quot;&gt;Navigation3&lt;/a&gt;
+                &lt;a href=&quot;länk&quot; id=&quot;navigation-4-nav&quot;&gt;Navigation4&lt;/a&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/nav&gt;
+&lt;/header&gt;</code>
+                </pre>
+                <button class="code-btn">Kopiera kod</button>
+            </div>
+            <div class="code-block">
+                <p><b>CSS</b></p>
+                <pre>
+                    <code>/*Sticky header*/
+header{
+    position: sticky;
+    top: 0;
+}
+
+/*Navigation menu*/
+nav{
+    font-family: Oswald, sans-serif;
+    font-size: 1.2em;
+    font-weight: 600;
+    text-align: center;
+
+    background-color:var(--secondary-color);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Links inside the navbar 
+Set transparant border*/
+nav a {
+    text-decoration: none;
+    color: var(--text-color-dark);
+    
+    padding: 1em;
+    border-width: 0.4em;
+    border-style: none none solid none;
+    border-color: transparent;
+}
+
+/* The dropdown container */
+.dropdown {
+    position: relative;
+}
+
+/* Dropdown button */
+.dropdown .dropbtn {
+    display: block;
+}
+
+/* Add a bordercolor to navbar links on hover */
+nav a:hover,
+nav a:focus-within {
+    color: var(--text-focus-btn);
+    border-style: none none solid none;
+    border-color: var(--primary-color);
+}
+
+/* Dropdown content (hidden by default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: var(--neutral-color-lighter);
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+    font-size: 1em;
+    font-weight: 500;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+/* Add a grey background color to dropdown links on hover */
+.dropdown-content a:hover,
+.dropdown-content a:focus-within{
+    background-color: var(--neutral-color);
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content, 
+.dropdown:focus-within .dropdown-content {
+    display: block;
+}</code>
+                </pre>
+                <button class="code-btn">Kopiera kod</button>
+            </div>
+        </div>
+        <h2>Användning</h2>
+        <p>Nedan visas exempel på hur de olika elementen används och ser ut i nuvarande webbläsare.</p>
+        <h3 id="menu">Menyn</h3>
+        <nav>
+            <img   src="/imgs/Logga RAD ruta.png" alt="RAD logga" height="70">
+            <a href="#menu">Simpel länk</a>
+
+            <div class="dropdown">
+                <a class="dropbtn"  
+                    href="#menu">Gardin <i class="bi bi-caret-down-fill"></i></a>
+                <div class="dropdown-content">
+                    <a href="#menu">Simpel länk</a>
+                    <a href="#menu">Simpel länk</a>
+                </div>
+            </div>
+        </nav>
+
+        <p>Menyn ska innehålla loggan och länkar till olika sidor på webbplatsen. Man kan använda 
+            antingen simpla länkar eller dropdown element (som även de kan vara länkar). 
+        </p>
+        <p>Texten för varje länk ska inte vara lång, max 2 ord eller max 15 tecken. 
+            Texten ska tydligt beskriva vart användaren kommer när den länkas vidare
+        </p>
+        <p>
+            Se till att använda korrekt struktur när menyn byggs upp. Menyn består flera <code>&lt;a&gt;</code> element inne i en <code>&lt;nav&gt;</code> som är inne i <code>&lt;header&gt;</code>.
+        </p>
+        
+        <hr>
+        <h3 id="simple">Simpel länk</h3>
+        <nav>
+            <a href="#simple">Simpel länk</a>
+            <a href="#simple">Simpel länk</a>
+        </nav>
+        <p>En simple länk används om sidan inte har några viktiga undersidor</p>
+        <p>Simpla länkar behöver inga speciella klasser för att fungera.</p>
+
+        <hr>
+        <h3 id="dropdown">Gradin element</h3>
+        <nav>
+            <div class="dropdown">
+                <a class="dropbtn"  
+                    href="#dropdown">Gardin <i class="bi bi-caret-down-fill"></i></a>
+                <div class="dropdown-content">
+                    <a href="#dropdown">Simpel länk</a>
+                    <a href="#dropdown">Simpel länk</a>
+                </div>
+            </div>
+        </nav>
+        <p>Gardin element används när det finns en eller flera undersidor till en sida.</p>
+        <p>För att implementera används klassen <code>dropbox</code> på hela elementet, 
+            klassen <code>dropbtn</code> på länken med högst hiarki och 
+            klassen <code>dropdown-content</code> på elementet som innehåller alla undersidor.</p>
+`
+}
+
+function getColorSchemePage(){
+    return`<h1>Färgschema</h1>
+        <p>RAD använder ett färgschema för att ha en enhetlig look som känns igen av de som kommer i kontakt med RAD.</p>
+        <img class=example-img src="imgs/färgschema.png" alt="Bild på de met använda färgerna för RAD">
+
+        <h2>Kom igång</h2>
+        <p>För att komma igång inkludera detta i projektet.</p>
+        <div class="code-container">
+            <div class="code-block">
+                <p><b>CSS</b><p>
+                <pre>
+                    <code>/* Light mode - default */
+:root{
+    --bg-color: rgb(244, 242, 234);
+    --primary-color:rgb(255, 179, 25);
+    --primary-color-darker:rgb(224, 143, 22);
+    --secondary-color:rgb(255, 225, 148);
+    --neutral-color:rgb(211, 211, 211);
+    --neutral-color-lighter:rgb(241, 241, 241);
+    --neutral-color-darker:rgb(128, 128, 128);
+    --accent-color:rgb(22, 65, 106);
+    --accent-color-darker:rgb(12, 29, 44);
+    --text-focus-btn:rgb(106, 62, 22);
+    --text-color-dark:rgb(19, 19, 19);
+    --text-color-light:rgb(252, 252, 252);
+    --text-color-light-btn-hover:rgb(243, 243, 243);
+    --text-color-error:rgb(216, 37, 37);
+    --negative-color-btn:rgb(185, 52, 52);
+    --negative-color-btn-darker:rgb(131, 37, 37);
+}</code>
+                </pre>
+                <button class="code-btn">Kopiera kod</button>
+            </div>
+        </div>
+        
+        <h2>Användning</h2>
+        <p>Färgschemat kan återfinnas genom flera element. När nya element ska designas ska man utgå från dessa variabler</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Färgkod</th>
+                    <th>Variabelnamn</th>
+                    <th>Exempel</th>
+                    <th>Användning</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>rgb(244, 242, 234)</td>
+                    <td>--bg-color</td>
+                    <td style="background-color: var(--bg-color); min-width: 4em;"></td>
+                    <td>Bakgrundsfärg för <code>body</code></td>
+                </tr>
+                <tr>
+                    <td>rgb(255, 179, 25)</td>
+                    <td>--primary-color</td>
+                    <td style="background-color: var(--primary-color); min-width: 4em;"></td>
+                    <td>Primär färg för designelement, står </td>
+                </tr>
+                <tr>
+                    <td>rgb(224, 143, 22)</td>
+                    <td>--primary-color-darker</td>
+                    <td style="background-color: var(--primary-color-darker); min-width: 4em;"></td>
+                    <td>Mörkare variant av primär färg, används främst när knappar i primärfärg hovras över</td>
+                </tr>
+                <tr>
+                    <td>rgb(255, 225, 148)</td>
+                    <td> --secondary-color</td>
+                    <td style="background-color: var( --secondary-color); min-width: 4em;"></td>
+                    <td>Sekundär färg, används främst som bakgrundsfärg för block</td>
+                </tr>
+                <tr>
+                    <td>rgb(211, 211, 211)</td>
+                    <td>--neutral-color</td>
+                    <td style="background-color: var(--neutral-color); min-width: 4em;"></td>
+                    <td>En neutralare färg, används främst som bakgrundsfärg för meddelanden</td>
+                </tr>
+                <tr>
+                    <td>rgb(241, 241, 241)</td>
+                    <td>--neutral-color-lighter</td>
+                    <td style="background-color: var(--neutral-color-lighter); min-width: 4em;"></td>
+                    <td>Ljusare neutral färg, används främst för element i meddelanden</td>
+                </tr>
+                <tr>
+                    <td>rgb(128, 128, 128)</td>
+                    <td>--neutral-color-darker</td>
+                    <td style="background-color: var(--neutral-color-darker); min-width: 4em;"></td>
+                    <td>Mörkare neutral färg, används främst för element i meddelanden</td>
+                </tr>
+                <tr>
+                    <td>rgb(22, 65, 106)</td>
+                    <td>--accent-color</td>
+                    <td style="background-color: var(--accent-color); min-width: 4em;"></td>
+                    <td>En accentfärg som bryter av från primärfärgen, används främst för element och ibland som bakgrundsfärg</td>
+                </tr>
+                <tr>
+                    <td>rgb(12, 29, 44)</td>
+                    <td>--accent-color-darker</td>
+                    <td style="background-color: var(--accent-color-darker); min-width: 4em;"></td>
+                    <td>Mörkare variant av accentfärg, används främst när knappar i accentfärg hovras över</td>
+                </tr>
+                <tr>
+                    <td>rgb(106, 62, 22)</td>
+                    <td>--text-focus-btn</td>
+                    <td style="background-color: var(--text-focus-btn); min-width: 4em;"></td>
+                    <td>En färg för att indikera att länkar i menyn hovras över</td>
+                </tr>
+                <tr>
+                    <td>rgb(19, 19, 19)</td>
+                    <td>--text-color-dark</td>
+                    <td style="background-color: var(--text-color-dark); min-width: 4em;"></td>
+                    <td>En mörk textfärg, är den primära färgen för text</td>
+                </tr>
+                <tr>
+                    <td>rgb(252, 252, 252)</td>
+                    <td>--text-color-light</td>
+                    <td style="background-color: var(--text-color-light); min-width: 4em;"></td>
+                    <td>En ljus textfärg, används när bakgrunden är mörkare, som <code>--accent-color</code>, <code>--accent-color-darker</code>, även i fetstil för knappar i <code>--primary-color</code></td>
+                </tr>
+                <tr>
+                    <td>rgb(243, 243, 243)</td>
+                    <td>--text-color-light-btn-hover</td>
+                    <td style="background-color: var(--text-color-light-btn-hover); min-width: 4em;"></td>
+                    <td>En något mörkare variant av <code>--text-color-light</code>, används främst när knappar med ljus textfärg hovras över</td>
+                </tr>
+                <tr>
+                    <td>rgb(216, 37, 37)</td>
+                    <td>--text-color-error</td>
+                    <td style="background-color: var(--text-color-error); min-width: 4em;"></td>
+                    <td>Textfärg för errormeddelande</td>
+                </tr>
+                <tr>
+                    <td>rgb(185, 52, 52)</td>
+                    <td>--negative-color-btn</td>
+                    <td style="background-color: var(--negative-color-btn); min-width: 4em;"></td>
+                    <td>En färg för knappar med avbrytande funktionalitet</td>
+                </tr>
+                <tr>
+                    <td>rgb(131, 37, 37)</td>
+                    <td>--negative-color-btn-darker</td>
+                    <td style="background-color: var(--negative-color-btn-darker); min-width: 4em;"></td>
+                    <td>En färg för knappar med färgen <code>--negative-color-btn</code> hovras över</td>
+                </tr>
+            </tbody>
+        </table>
+        </p>`
+}
+
 
 const routes = {
     '#/': getHomePage,
     '#/web-components': getWebComponentsPage,
     '#/design-guidelines/text':getTextPage,
+    '#/design-guidelines/color-scheme':getColorSchemePage,
     '#/design-guidelines/logo':getLogoPage,
-    '#/web-components/button':getButtonPage
+    '#/web-components/button':getButtonPage,
+    '#/web-components/table':getTablePage,
+    '#/web-components/navigation':getMenuPage
 };
 
 function handleRoute() {
     const hash = window.location.hash || '#/'; // Default to home if no hash
     const content = routes[hash] ? routes[hash]() : '<h1>Page Not Found</h1>';
-    //document.getElementById('content').innerHTML = content;
+    document.getElementById('content').innerHTML = content;
 }
 
 // Listen for navigation events

@@ -1,13 +1,12 @@
 /* Light mode - default */
 :root{
-    font-family: Arial, Helvetica, sans-serif;
     --bg-color: rgb(244, 242, 234);
     --primary-color:rgb(255, 179, 25);
     --primary-color-darker:rgb(224, 143, 22);
     --secondary-color:rgb(255, 225, 148);
-    --neutral-color:lightgray;
+    --neutral-color:rgb(211, 211, 211);
     --neutral-color-lighter:rgb(241, 241, 241);
-    --neutral-color-darker:gray;
+    --neutral-color-darker:rgb(128, 128, 128);
     --accent-color:rgb(22, 65, 106);
     --accent-color-darker:rgb(12, 29, 44);
     --text-focus-btn:rgb(106, 62, 22);
@@ -20,7 +19,7 @@
 }
 
 /* Dark Mode */
-:root[data-theme="dark"],
+/* :root[data-theme="dark"],
 .dark {
     --bg-color: rgb(31, 34, 40);
     --primary-color: rgb(255, 179, 25);
@@ -29,14 +28,14 @@
     --text-focus-btn:rgb(106, 62, 22);
     --text-color-dark:rgb(19, 19, 19);
     --text-color-light:rgb(252, 252, 252);
-}
+} */
 
 body{
     width: 100%;
     max-width: 70em;
     margin: 0 auto;
 
-    font-family: "Raleway", sans-serif;
+    font-family: Raleway, sans-serif;
     font-style: normal;
     color: var(--text-color-dark);
 
@@ -53,29 +52,32 @@ footer{
     min-height: 2em;
 }
 
-nav{
-    font-family: "Oswald", sans-serif;
-    font-size: 1.2em;
-    font-weight: 600;
-}
- /* Navbar container */
-nav {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    background-color:var(--secondary-color);
-    
+/*Sticky header*/
+header{
+    position: sticky;
+    top: 0;
 }
 
-/* Links inside the navbar */
+/*Navigation menu*/
+nav{
+    font-family: Oswald, sans-serif;
+    font-size: 1.2em;
+    font-weight: 600;
+    text-align: center;
+
+    background-color:var(--secondary-color);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;   
+}
+
+/* Links inside the navbar 
+Set transparant border*/
 nav a {
     text-decoration: none;
     color: var(--text-color-dark);
-}
-
-/* Set transparant border om button and link */
-.navbar a, .dropdown .dropbtn{
+    
     padding: 1em;
     border-width: 0.4em;
     border-style: none none solid none;
@@ -89,16 +91,12 @@ nav a {
 
 /* Dropdown button */
 .dropdown .dropbtn {
-    font-family: inherit; 
-    font-weight: inherit;
-    font-size: inherit; 
-    margin: 0; 
     display: block;
 }
 
 /* Add a bordercolor to navbar links on hover */
-.navbar a:hover,
-.navbar a:focus-within {
+nav a:hover,
+nav a:focus-within {
     color: var(--text-focus-btn);
     border-style: none none solid none;
     border-color: var(--primary-color);
@@ -128,7 +126,7 @@ nav a {
 /* Add a grey background color to dropdown links on hover */
 .dropdown-content a:hover,
 .dropdown-content a:focus-within{
-    background-color: #ddd;
+    background-color: var(--neutral-color);
 }
 
 /* Show the dropdown menu on hover */
@@ -150,15 +148,15 @@ img{
 
 /* Headings*/
 h1{
-    font-family: "Oswald", sans-serif;
+    font-family: Oswald, sans-serif;
     font-weight: bold;
 }
 h2{
-    font-family: "Oswald", sans-serif;
+    font-family: Oswald, sans-serif;
     font-weight: 400;
 }
 h3{
-    font-family: "Oswald", sans-serif;
+    font-family: Oswald, sans-serif;
     font-weight: 300;
 }
 
@@ -173,9 +171,9 @@ h3{
     margin: 0.3em; 
 }
 
+
 /* Table */
 table {
-    width: 100%;
     min-width: 400px;
     border-collapse: separate;
     border-spacing: 0;
@@ -188,33 +186,22 @@ table {
 
 /* Header */
 thead {
-    background-color: var(--accent-color);
+    background-color: var(--primary-color);
     color: var(--text-color-light);
 }
 
-/* TODO: MAKE IT STICKY */
 th {
-    background: white;
-    position: sticky;
-    top: 0;
-    padding: 16px;
+    padding: 1rem 1rem 0.5rem;
+    text-align: left;
     font-weight: bold;
-    z-index: 10;
 }
 
 /* Body */
 td {
-    padding: 14px 16px;
+    padding: 1.3rem 1rem;
     border-bottom: solid 1px var(--neutral-color);
+    border-left: solid 1px var(--neutral-color);
 }
-
-/* td:first-child,
-th:first-child {
-    position: sticky;
-    left: 0;
-
-    z-index: 5;
-} */
 
 /* Zebra stripes */
 tbody tr:nth-child(even) {
@@ -227,9 +214,40 @@ tbody tr:hover {
     transition: background 0.2s ease;
 }
 
-/* No border on last row */
+tbody tr:hover td {
+    border-left-color: var(--neutral-color-lighter);
+}
+/* No left border on first column */
+tbody td:first-child{
+    border-left: none;
+}
+
+/* No bottom border on last row */
 tbody tr:last-child td {
     border-bottom: none;
+}
+
+/* Alternative tables */
+table.dark thead{
+    background-color: var(--accent-color);
+}
+
+.airy-table th{
+    padding: 2rem 5vw 1rem;
+    text-align: center;
+}
+.airy-table td{
+    border-left: none;
+    padding: 2rem 5vw;
+    text-align: center;
+}
+
+.compact-table{
+    border-radius: 0.5em;
+}
+.compact-table th,
+.compact-table td{
+    padding: 0.5rem 0.3rem;
 }
 
 /* Buttons */
@@ -237,7 +255,7 @@ button{
     min-width: 48px;
     min-height: 48px;
 
-    font-family: "Raleway", sans-serif;
+    font-family: Raleway, sans-serif;
     font-size: medium;
     font-weight: 700;
     text-transform: uppercase;
@@ -254,7 +272,7 @@ button{
     border-radius: 0;
 }
 
-.dark-btn{
+button.dark{
     background-color: var(--accent-color);
 }
 
@@ -283,8 +301,8 @@ button:focus {
     transition: background 0.2s ease;
 }
 
-.dark-btn:hover,
-.dark-btn:focus-within{
+button.dark:hover,
+button.dark:focus-within{
     background-color: var(--accent-color-darker);
 }
 
@@ -325,4 +343,9 @@ code{
     border-radius: 1em;
     background-color: lightgrey;
     
+}
+
+.example-img{
+    border:4px solid white;
+    border-radius: 2em;
 }
