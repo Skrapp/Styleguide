@@ -1,66 +1,57 @@
-function getHomePage(){
-    return `<h1>Welcome home</h1>
-    <h2>subtitel</h2>
-    <p>homepage</p>`;
+// Sidbyggare - bygger sidor från konfiguration istället för repeterad HTML
+function buildPage(config) {
+    let html = `<h1>${config.title}</h1>`;
+    html += `<p>${config.description}</p>`;
+    
+    if (config.image) {
+        html += `<img class="example-img" src="${config.image.src}" alt="${config.image.alt}">`;
+    }
+    
+    if (config.codeExamples && config.codeExamples.length > 0) {
+        html += `<h2>Kom igång</h2>`;
+        html += `<p>${config.getStartedText || 'För att komma igång inkludera detta i projektet'}</p>`;
+        html += `<div class="code-container">`;
+        
+        config.codeExamples.forEach(example => {
+            html += `<div class="code-block">`;
+            html += `<p><b>${example.label}</b></p>`;
+            html += `<pre><code>${example.code}</code></pre>`;
+            html += `<button class="code-btn">Kopiera kod</button>`;
+            html += `</div>`;
+        });
+        
+        html += `</div>`;
+    }
+    
+    if (config.usageHtml) {
+        html += `<h2>Användning</h2>`;
+        html += `<p>${config.usageIntroText || 'Nedan visas exempel på hur de olika elementen används och ser ut i nuvarande webbläsare.'}</p>`;
+        html += config.usageHtml;
+    }
+    
+    return html;
 }
 
-function getWebComponentsPage(){
-    return `<h1>Welcome to webcomponents</h1>
-    <p>webcomponents</p>`;
-}
+// ============ Page Configs ============
 
-function getLogoPage(){
-    return `<h1>Loggor</h1>    
-        <p>Riksorganisationen Auktoriserade Dramapedagoger (RAD) har en logga som används i all media. Främst ska den runda loggan användas men om den ska användas i mindre än 80px i höjd ska någon av de mindre loggorna användas.</p>
-        <div class="flex-container">
-            <div>
-                <img src="/imgs/Logga RAD.png" alt="Logga för Riksorganisationen Auktoriserade Dramapedagoger" height="400">
-                <br>
-                <a href="/imgs/Logga RAD.png" download="Logga RAD">
-                    <button class="function-btn">Ladda ner <i class="bi bi-download"></i></button>
-                </a>
-            </div>
-
-            <div>
-                <img src="/imgs/Logga RAD mindre.png" alt="Mindre logga för Riksorganisationen Auktoriserade Dramapedagoger" height="80">
-                <br>
-                <a href="/imgs/Logga RAD mindre.png" download="Logga RAD mindre">
-                    <button class="function-btn">Ladda ner <i class="bi bi-download"></i></button>
-                </a>
-            </div>
-
-            <div>
-                <img src="/imgs/Logga RAD ruta.png" alt="Mindre logga i kvadrat för Riksorganisationen Auktoriserade Dramapedagoger" height="80">
-                <br>
-                <a href="/imgs/Logga RAD ruta.png" download="Logga RAD">
-                    <button class="function-btn">Ladda ner <i class="bi bi-download"></i></button>
-                </a>
-            </div>
-       </div>`
-}
-
-function getTextPage(){
-    return `<h1>Rubriker och text</h1>
-        <p>Dessa typsnitt och storlekar används över alla RAD:s webbplattformar. De typsnitt som används är "Raleway" och "Oswald". 
-            Båda hämtas från <a href="https://fonts.google.com/" target="_blank"> Google APIs </a>. Om typsnitten inte funkar ska det falla tillbaka till "sans-serif"</p>
-        <img class="example-img" src="/imgs/Exempel text.png" alt="Bild av typsnitt vid olika andvändningar, navigation, rubriker, brödtext och knappar">
-        <h2>Kom igång</h2>
-        <p>För att komma igång inkludera detta i projektet</p>
-        <div class="code-container">
-            <div class="code-block">
-                <p><b>HTML:</b> Inkludera i &lt;head&gt;</p>
-                <pre>
-                    <code>    &lt;link rel&#x3D;&quot;preconnect&quot; href&#x3D;&quot;https:&#x2F;&#x2F;fonts.googleapis.com&quot;&gt;
+const textPageConfig = {
+    title: 'Rubriker och text',
+    description: 'Dessa typsnitt och storlekar används över alla RAD:s webbplattformar. De typsnitt som används är "Raleway" och "Oswald". Båda hämtas från <a href="https://fonts.google.com/" target="_blank"> Google APIs </a>. Om typsnitten inte funkar ska det falla tillbaka till "sans-serif"',
+    image: {
+        src: '/imgs/Exempel text.png',
+        alt: 'Bild av typsnitt vid olika andvändningar, navigation, rubriker, brödtext och knappar'
+    },
+    codeExamples: [
+        {
+            label: 'HTML: Inkludera i &lt;head&gt;',
+            code: `    &lt;link rel&#x3D;&quot;preconnect&quot; href&#x3D;&quot;https:&#x2F;&#x2F;fonts.googleapis.com&quot;&gt;
     &lt;link rel&#x3D;&quot;preconnect&quot; href&#x3D;&quot;https:&#x2F;&#x2F;fonts.gstatic.com&quot; crossorigin&gt;
     &lt;link href&#x3D;&quot;https:&#x2F;&#x2F;fonts.googleapis.com&#x2F;css2?family&#x3D;Raleway:wght@100..900&amp;display&#x3D;swap&quot; rel&#x3D;&quot;stylesheet&quot;&gt;
-    &lt;link href&#x3D;&quot;https:&#x2F;&#x2F;fonts.googleapis.com&#x2F;css2?family&#x3D;Oswald:wght@200..700&amp;family&#x3D;Raleway:wght@100..900&amp;display&#x3D;swap&quot; rel&#x3D;&quot;stylesheet&quot;&gt;</code>
-                </pre>
-                <button class="code-btn">Kopiera kod</button>
-            </div>
-            <div class="code-block">
-                <p><b>CSS</b></p>
-                <pre>
-                    <code>/*Body text*/
+    &lt;link href&#x3D;&quot;https:&#x2F;&#x2F;fonts.googleapis.com&#x2F;css2?family&#x3D;Oswald:wght@200..700&amp;family&#x3D;Raleway:wght@100..900&amp;display&#x3D;swap&quot; rel&#x3D;&quot;stylesheet&quot;&gt;`
+        },
+        {
+            label: 'CSS',
+            code: `/*Body text*/
 body{
     font-family: "Raleway", sans-serif;
     font-style: normal;
@@ -134,14 +125,10 @@ button:hover {
 
 button .dark:hover{
     background-color: var(--accent-color-darker);
-}</code>
-                </pre>
-                <button class="code-btn">Kopiera kod</button>
-            </div>
-        </div>
-        <h2>Användning</h2>
-        <p>Nedan visas exempel på hur de olika elementen används och ser ut i nuvarande webbläsare.</p>
-        
+}`
+        }
+    ],
+    usageHtml: `
         <h3>Rubriker</h3>
         <h1>Rubrik 1 används för titel på sidan</h1>
         <h2>Rubrik 2 används för underrubriker på sidan</h2>
@@ -151,7 +138,7 @@ button .dark:hover{
         <h3>Brödtext</h3>
         <p>Brödtexten är den text som fyller ut sidan mest och innehåller informationen som användaren söker.</p>
         <p>En bra text är uppdelad i tydliga stycken och det inte blir för långa textrader, därav är det viktigt att se till att huvudelementet texten befinner sig i har en bekväm maxbredd.</p>
-        <p>I flödande text kan länkar användas för att guida användaren till relevant info. Länkar som refererar till en annan domämn än den egna ska öppnas i ett separat flik, se då till att använda <code>target="_blank"</code> i HTML-elementet.</code></p>
+        <p>I flödande text kan länkar användas för att guida användaren till relevant info. Länkar som refererar till en annan domämn än den egna ska öppnas i ett separat flik, se då till att använda <code>target="_blank"</code> i HTML-elementet.</p>
 
         <hr>
         <h3>Knappar</h3>
@@ -165,21 +152,20 @@ button .dark:hover{
         <h3>Special text</h3>
         <p class="error-text">Errormeddelande</p>
         <p>Om en text visar ett errormeddelande ska den texten använda classen <code>error-text</code>. Om errormeddelandet riskerar att hamna på en bakgrund som gör att det är svårt att läsa så ska en ljus bakgrund användas så som "--bg-color".</p>
-`;
-}
+    `
+};
 
-function getButtonPage(){
-    return `<h1>Knappar</h1>
-        <p>Knappar används för flertalet olika situationer, så som formulär eller Call-to-Action element. Beroende på funktion och placering används olika knappar på RAD:s webbplattformar.</p>
-        <img class="example-img" src="imgs/exempel knappar.png" alt="Bild på hur knappar kan se ut i olika situationer">
-        
-        <h2>Kom igång</h2>
-        <p>För att komma igång inkludera detta i projektet.</p>
-        <div class="code-container">
-            <div class="code-block">
-                <p><b>CSS</b></p>
-                <pre>
-                    <code>/* Buttons */
+const buttonPageConfig = {
+    title: 'Knappar',
+    description: 'Knappar används för flertalet olika situationer, så som formulär eller Call-to-Action element. Beroende på funktion och placering används olika knappar på RAD:s webbplattformar.',
+    image: {
+        src: 'imgs/exempel knappar.png',
+        alt: 'Bild på hur knappar kan se ut i olika situationer'
+    },
+    codeExamples: [
+        {
+            label: 'CSS',
+            code: `/* Buttons */
 button{
     min-width: 48px;
     min-height: 48px;
@@ -244,15 +230,10 @@ button.dark:focus-within{
 .neutral-btn:hover,
 .neutral-btn:focus-within{
     background-color: var(--neutral-color-darker);
-}</code>
-                </pre>
-                <button class="code-btn">Kopiera kod</button>
-            </div>
-        </div>
-
-        <h2>Användning</h2>
-        <p>Nedan visas exempel på hur de olika elementen används och ser ut i nuvarande webbläsare.</p>
-        
+}`
+        }
+    ],
+    usageHtml: `
         <h3>Standard</h3>
         <button>Klicka mig</button>
         <p>Texten i knappar ska vara kort och tydlig, maximalt tre ord eller 15 tecken.</p>
@@ -285,20 +266,20 @@ button.dark:focus-within{
         <h3>Neutral knapp</h3>
         <button class="neutral-btn">Klicka mig</button>
         <p>Neutrala knappar används vid situationer när knappen bör finnas men inte ska väcka så mycket uppmärksamhet.</p>
-`
-}
+    `
+};
 
-function getTablePage(){
-    return `<h1>Tabeller</h1>
-        <p>RAD använder två olika typer av tabeller, en för fåtal kolumner och en för många kolumner.</p>
-        <img class="example-img" src="/imgs/exempel tabell.png" alt="Bild på två exempel av tabeller">
-        <h2>Kom igång</h2>
-        <p>För att komma igång inkludera detta i projektet.</p>
-        <div class="code-container">
-            <div class="code-block">
-                <p><b>HTML:</b> struktur av tabell</p>
-                <pre>
-                    <code>&lt;table class="class-name"&gt;
+const tablePageConfig = {
+    title: 'Tabeller',
+    description: 'RAD använder två olika typer av tabeller, en för fåtal kolumner och en för många kolumner.',
+    image: {
+        src: '/imgs/exempel tabell.png',
+        alt: 'Bild på två exempel av tabeller'
+    },
+    codeExamples: [
+        {
+            label: 'HTML: struktur av tabell',
+            code: `&lt;table class="class-name"&gt;
     &lt;thead&gt;
         &lt;tr&gt;
             &lt;th&gt;titel1&lt;/th&gt;
@@ -311,14 +292,11 @@ function getTablePage(){
             &lt;td&gt;data1.2&lt;/td&gt;
         &lt;/tr&gt;
     &lt;/tbody&gt;
-&lt;/table&gt;</code>
-                </pre>
-                <button class="code-btn">Kopiera kod</button>
-            </div>
-            <div class="code-block">
-                <p><b>CSS</b></p>
-                <pre>
-                    <code>/* Table */
+&lt;/table&gt;`
+        },
+        {
+            label: 'CSS',
+            code: `/* Table */
 table {
     min-width: 400px;
     border-collapse: separate;
@@ -393,14 +371,10 @@ table.dark thead{
 .compact-table th,
 .compact-table td{
     padding: 0.5rem 0.3rem;
-}</code>
-                </pre>
-                <button class="code-btn">Kopiera kod</button>
-            </div>
-        </div>
-        <h2>Användning</h2>
-        <p>Nedan visas exempel på hur de olika elementen används och ser ut i nuvarande webbläsare.</p>
-
+}`
+        }
+    ],
+    usageHtml: `
         <h3>Standard</h3>
         <table>
             <thead>
@@ -544,20 +518,20 @@ table.dark thead{
             </tbody>
         </table>
         <p>Alla tabeller kan få en annan färg. Använd klassen <code>dark</code> på table elementet.</p>
-        </table>`
-}
+    `
+};
 
-function getMenuPage(){
-    return`<h1>Menyer</h1>
-        <p>Navigation sker främst i huvudmenyn.</p>
-        <img class="example-img" src="imgs/exempel meny.png" alt="Bild på navigationsmenyn på denna sida">
-        <h2>Kom igång</h2>
-        <p>För att komma igång inkludera detta i projektet.</p>
-        <div class="code-container">
-            <div class="code-block">
-                <p><b>HTML:</b> struktur av huvudmeny</p>
-                <pre>
-                    <code>&lt;header&gt;
+const menuPageConfig = {
+    title: 'Menyer',
+    description: 'Navigation sker främst i huvudmenyn.',
+    image: {
+        src: 'imgs/exempel meny.png',
+        alt: 'Bild på navigationsmenyn på denna sida'
+    },
+    codeExamples: [
+        {
+            label: 'HTML: struktur av huvudmeny',
+            code: `&lt;header&gt;
     &lt;nav&gt;
         &lt;img   src=&quot;/imgs/Logga RAD ruta.png&quot; alt=&quot;RAD logga&quot; height=&quot;70&quot;&gt;
         &lt;a href=&quot;#&quot; id=&quot;home-nav&quot;&gt;Hem&lt;/a&gt;
@@ -572,14 +546,11 @@ function getMenuPage(){
             &lt;/div&gt;
         &lt;/div&gt;
     &lt;/nav&gt;
-&lt;/header&gt;</code>
-                </pre>
-                <button class="code-btn">Kopiera kod</button>
-            </div>
-            <div class="code-block">
-                <p><b>CSS</b></p>
-                <pre>
-                    <code>/*Sticky header*/
+&lt;/header&gt;`
+        },
+        {
+            label: 'CSS',
+            code: `/*Sticky header*/
 header{
     position: sticky;
     top: 0;
@@ -660,13 +631,10 @@ nav a:focus-within {
 .dropdown:hover .dropdown-content, 
 .dropdown:focus-within .dropdown-content {
     display: block;
-}</code>
-                </pre>
-                <button class="code-btn">Kopiera kod</button>
-            </div>
-        </div>
-        <h2>Användning</h2>
-        <p>Nedan visas exempel på hur de olika elementen används och ser ut i nuvarande webbläsare.</p>
+}`
+        }
+    ],
+    usageHtml: `
         <h3 id="menu">Menyn</h3>
         <nav>
             <img   src="/imgs/Logga RAD ruta.png" alt="RAD logga" height="70">
@@ -717,21 +685,20 @@ nav a:focus-within {
         <p>För att implementera används klassen <code>dropbox</code> på hela elementet, 
             klassen <code>dropbtn</code> på länken med högst hiarki och 
             klassen <code>dropdown-content</code> på elementet som innehåller alla undersidor.</p>
-`
-}
+    `
+};
 
-function getColorSchemePage(){
-    return`<h1>Färgschema</h1>
-        <p>RAD använder ett färgschema för att ha en enhetlig look som känns igen av de som kommer i kontakt med RAD.</p>
-        <img class=example-img src="imgs/färgschema.png" alt="Bild på de met använda färgerna för RAD">
-
-        <h2>Kom igång</h2>
-        <p>För att komma igång inkludera detta i projektet.</p>
-        <div class="code-container">
-            <div class="code-block">
-                <p><b>CSS</b><p>
-                <pre>
-                    <code>/* Light mode - default */
+const colorSchemePageConfig = {
+    title: 'Färgschema',
+    description: 'RAD använder ett färgschema för att ha en enhetlig look som känns igen av de som kommer i kontakt med RAD.',
+    image: {
+        src: 'imgs/färgschema.png',
+        alt: 'Bild på de met använda färgerna för RAD'
+    },
+    codeExamples: [
+        {
+            label: 'CSS',
+            code: `/* Light mode - default */
 :root{
     --bg-color: rgb(244, 242, 234);
     --primary-color:rgb(255, 179, 25);
@@ -749,13 +716,10 @@ function getColorSchemePage(){
     --text-color-error:rgb(216, 37, 37);
     --negative-color-btn:rgb(185, 52, 52);
     --negative-color-btn-darker:rgb(131, 37, 37);
-}</code>
-                </pre>
-                <button class="code-btn">Kopiera kod</button>
-            </div>
-        </div>
-        
-        <h2>Användning</h2>
+}`
+        }
+    ],
+    usageHtml: `
         <p>Färgschemat kan återfinnas genom flera element. När nya element ska designas ska man utgå från dessa variabler</p>
         <table>
             <thead>
@@ -849,13 +813,13 @@ function getColorSchemePage(){
                     <td>rgb(216, 37, 37)</td>
                     <td>--text-color-error</td>
                     <td style="background-color: var(--text-color-error); min-width: 4em;"></td>
-                    <td>Textfärg för errormeddelande</td>
+                    <td>Textfärg för korta errormeddelande</td>
                 </tr>
                 <tr>
                     <td>rgb(185, 52, 52)</td>
                     <td>--negative-color-btn</td>
                     <td style="background-color: var(--negative-color-btn); min-width: 4em;"></td>
-                    <td>En färg för knappar med avbrytande funktionalitet</td>
+                    <td>En färg när knappar med avbrytande funktionalitet</td>
                 </tr>
                 <tr>
                     <td>rgb(131, 37, 37)</td>
@@ -865,19 +829,83 @@ function getColorSchemePage(){
                 </tr>
             </tbody>
         </table>
-        </p>`
+    `
+};
+
+// ============ Page Functions ============
+
+function getHomePage(){
+    return `<h1>Welcome home</h1>
+    <h2>subtitel</h2>
+    <p>homepage</p>`;
 }
 
+function getWebComponentsPage(){
+    return `<h1>Welcome to webcomponents</h1>
+    <p>webcomponents</p>`;
+}
+
+function getLogoPage(){
+    return `<h1>Loggor</h1>    
+        <p>Riksorganisationen Auktoriserade Dramapedagoger (RAD) har en logga som används i all media. Främst ska den runda loggan användas men om den ska användas i mindre än 80px i höjd ska någon av de mindre loggorna användas.</p>
+        <div class="flex-container">
+            <div>
+                <img src="/imgs/Logga RAD.png" alt="Logga för Riksorganisationen Auktoriserade Dramapedagoger" height="400">
+                <br>
+                <a href="/imgs/Logga RAD.png" download="Logga RAD">
+                    <button class="function-btn">Ladda ner <i class="bi bi-download"></i></button>
+                </a>
+            </div>
+
+            <div>
+                <img src="/imgs/Logga RAD mindre.png" alt="Mindre logga för Riksorganisationen Auktoriserade Dramapedagoger" height="80">
+                <br>
+                <a href="/imgs/Logga RAD mindre.png" download="Logga RAD mindre">
+                    <button class="function-btn">Ladda ner <i class="bi bi-download"></i></button>
+                </a>
+            </div>
+
+            <div>
+                <img src="/imgs/Logga RAD ruta.png" alt="Mindre logga i kvadrat för Riksorganisationen Auktoriserade Dramapedagoger" height="80">
+                <br>
+                <a href="/imgs/Logga RAD ruta.png" download="Logga RAD">
+                    <button class="function-btn">Ladda ner <i class="bi bi-download"></i></button>
+                </a>
+            </div>
+       </div>`;
+}
+
+function getTextPage(){
+    return buildPage(textPageConfig);
+}
+
+function getButtonPage(){
+    return buildPage(buttonPageConfig);
+}
+
+function getTablePage(){
+    return buildPage(tablePageConfig);
+}
+
+function getMenuPage(){
+    return buildPage(menuPageConfig);
+}
+
+function getColorSchemePage(){
+    return buildPage(colorSchemePageConfig);
+}
+
+// ============ Routing ============
 
 const routes = {
     '#/': getHomePage,
     '#/web-components': getWebComponentsPage,
-    '#/design-guidelines/text':getTextPage,
-    '#/design-guidelines/color-scheme':getColorSchemePage,
-    '#/design-guidelines/logo':getLogoPage,
-    '#/web-components/button':getButtonPage,
-    '#/web-components/table':getTablePage,
-    '#/web-components/navigation':getMenuPage
+    '#/design-guidelines/text': getTextPage,
+    '#/design-guidelines/color-scheme': getColorSchemePage,
+    '#/design-guidelines/logo': getLogoPage,
+    '#/web-components/button': getButtonPage,
+    '#/web-components/table': getTablePage,
+    '#/web-components/navigation': getMenuPage
 };
 
 function handleRoute() {
