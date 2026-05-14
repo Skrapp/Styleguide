@@ -200,21 +200,29 @@ table {
     border-radius: 1em;
 }
 
+
+/* Wrapper for horizontal scrolling */
+.table-wrapper {
+    overflow-x: scroll;
+}
+
 /* Header */
 thead {
     background-color: var(--primary-color);
     color: var(--text-color-light);
 }
 
+td, th{
+    padding: 1rem 0.5rem 0.5rem;
+}
+
 th {
-    padding: 1rem 1rem 0.5rem;
     text-align: left;
     font-weight: bold;
 }
 
 /* Body */
 td {
-    padding: 1.3rem 1rem;
     border-bottom: solid 1px var(--neutral-color);
     border-left: solid 1px var(--neutral-color);
 }
@@ -263,7 +271,7 @@ table.dark thead{
 }
 .compact-table th,
 .compact-table td{
-    padding: 0.5rem 0.3rem;
+    padding: 0.3rem 0.3rem;
 }
 
 /* Buttons */

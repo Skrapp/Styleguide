@@ -23,10 +23,27 @@ function buildPage(config) {
         html += `</div>`;
     }
     
-    if (config.usageHtml) {
+    if (config.usageHtml && (Array.isArray(config.usageHtml) ? config.usageHtml.length > 0 : true)) {
         html += `<h2>Användning</h2>`;
         html += `<p>${config.usageIntroText || 'Nedan visas exempel på hur de olika elementen används och ser ut i nuvarande webbläsare.'}</p>`;
-        html += config.usageHtml;
+
+        if (Array.isArray(config.usageHtml)) {
+            config.usageHtml.forEach(section => {
+                html += `<div class="usage-container">`
+                if (section.title) {
+                    html += `<h3>${section.title}</h3>`;
+                }
+                if (section.element) {
+                    html += section.element;
+                }
+                if (section.description) {
+                    html += `<div class="usage-description">${section.description}</div>`;
+                }
+                html += `</div>`
+            });
+        } else {
+            html += config.usageHtml;
+        }
     }
     
     return html;
@@ -128,31 +145,34 @@ button .dark:hover{
 }`
         }
     ],
-    usageHtml: `
-        <h3>Rubriker</h3>
-        <h1>Rubrik 1 används för titel på sidan</h1>
-        <h2>Rubrik 2 används för underrubriker på sidan</h2>
-        <h3>Rubrik 3 används i enstaka fall när det behövs ytterligare en nivå av underrubrik</h3>
-
-        <hr>
-        <h3>Brödtext</h3>
-        <p>Brödtexten är den text som fyller ut sidan mest och innehåller informationen som användaren söker.</p>
-        <p>En bra text är uppdelad i tydliga stycken och det inte blir för långa textrader, därav är det viktigt att se till att huvudelementet texten befinner sig i har en bekväm maxbredd.</p>
-        <p>I flödande text kan länkar användas för att guida användaren till relevant info. Länkar som refererar till en annan domämn än den egna ska öppnas i ett separat flik, se då till att använda <code>target="_blank"</code> i HTML-elementet.</p>
-
-        <hr>
-        <h3>Knappar</h3>
-        <button>Klicka mig</button>
-        <p>Knappar används för flertalet olika situationer, så som formulär eller Call-to-Action element. För mer specifika situationer <a href="/#/button">läs mer här.</a></p>
-        <p>Texten i knappar ska vara kort och tydlig, maximalt tre ord eller 15 tecken.</p>
-        <p>En knapp kan aktivera en konfirmationstext om användaren behöver bli informerad att något skett. 
-            En konfirmationstext kan vara att ett formulär skickats eller en fil laddats ner. Konfirmationstexten ska tydligt beskriva vad som skett. Använd klassen <code>btn-confirmation</code> på konfirmationstexten.</p>
-        
-        <hr>
-        <h3>Special text</h3>
-        <p class="error-text">Errormeddelande</p>
-        <p>Om en text visar ett errormeddelande ska den texten använda classen <code>error-text</code>. Om errormeddelandet riskerar att hamna på en bakgrund som gör att det är svårt att läsa så ska en ljus bakgrund användas så som "--bg-color".</p>
-    `
+    usageHtml: [
+        {
+            title: 'Rubriker',
+            element: `<h1>Rubrik 1 används för titel på sidan</h1>
+                      <h2>Rubrik 2 används för underrubriker på sidan</h2>
+                      <h3>Rubrik 3 används i enstaka fall när det behövs ytterligare en nivå av underrubrik</h3>`,
+            description: ''
+        },
+        {
+            title: 'Brödtext',
+            element: `<p>Brödtexten är den text som fyller ut sidan mest och innehåller informationen som användaren söker.</p>
+                      <p>En bra text är uppdelad i tydliga stycken och det inte blir för långa textrader, därav är det viktigt att se till att huvudelementet texten befinner sig i har en bekväm maxbredd.</p>
+                      <p>I flödande text kan länkar användas för att guida användaren till relevant info. Länkar som refererar till en annan domämn än den egna ska öppnas i ett separat flik, se då till att använda <code>target="_blank"</code> i HTML-elementet.</p>`,
+            description: ''
+        },
+        {
+            title: 'Knappar',
+            element: `<button>Klicka mig</button>`,
+            description: `<p>Knappar används för flertalet olika situationer, så som formulär eller Call-to-Action element. För mer specifika situationer <a href="/#/button">läs mer här.</a></p>
+                          <p>Texten i knappar ska vara kort och tydlig, maximalt tre ord eller 15 tecken.</p>
+                          <p>En knapp kan aktivera en konfirmationstext om användaren behöver bli informerad att något skett. En konfirmationstext kan vara att ett formulär skickats eller en fil laddats ner. Konfirmationstexten ska tydligt beskriva vad som skett. Använd klassen <code>btn-confirmation</code> på konfirmationstexten.</p>`
+        },
+        {
+            title: 'Special text',
+            element: `<p class="error-text">Errormeddelande</p>`,
+            description: `<p>Om en text visar ett errormeddelande ska den texten använda classen <code>error-text</code>. Om errormeddelandet riskerar att hamna på en bakgrund som gör att det är svårt att läsa så ska en ljus bakgrund användas så som "--bg-color".</p>`
+        }
+    ]
 };
 
 const buttonPageConfig = {
@@ -233,40 +253,40 @@ button.dark:focus-within{
 }`
         }
     ],
-    usageHtml: `
-        <h3>Standard</h3>
-        <button>Klicka mig</button>
-        <p>Texten i knappar ska vara kort och tydlig, maximalt tre ord eller 15 tecken.</p>
-        <p>En knapp kan aktivera en konfirmationstext om användaren behöver bli informerad att något skett. 
-            En konfirmationstext kan vara att ett formulär skickats eller en fil laddats ner. Konfirmationstexten ska tydligt beskriva vad som skett. Använd klassen <code>btn-confirmation</code> på konfirmationstexten.</p>
-        
-        <hr>
-        <h3>Alternativ färg</h3>
-        <button class="dark">Klicka mig</button>
-        <p>Alternativt kan den mörkare varianten av knappen användas, här används <code>--accent-color</code> istället för <code>--primary-color</code>. </p>
-        <p>Använd klassen <code>dark</code> för att få denna styling.</p>
-
-        <hr>
-        <h3>Funktions knappar</h3>
-        <button class="function-btn">Klicka mig <i class="bi bi-download"></i></button>
-        <p>För att särskilja funktionsknappar från andra knappar används denna typ av knapp. 
-            En funktionsknapp bör ha en ikon i sig för att det ska vara tydligt vad knappen gör.</p>
-        
-        <hr>
-        <h3>Positiv knapp</h3>
-        <button class="positive-btn">Klicka mig </button>
-        <p>Positiva knappar används vid situationer användaren ska spara, skapa eller godkänna.</p>
-
-        <hr>
-        <h3>Negativ knapp</h3>
-        <button class="negative-btn">Klicka mig</button>
-        <p>Negativa knappar används vid situationer användaren ska ångra, ta bort eller avbryta något. Aktioner som permanent gör material otillgängligt.</p>
-
-        <hr>
-        <h3>Neutral knapp</h3>
-        <button class="neutral-btn">Klicka mig</button>
-        <p>Neutrala knappar används vid situationer när knappen bör finnas men inte ska väcka så mycket uppmärksamhet.</p>
-    `
+    usageHtml: [
+        {
+            title: 'Standard',
+            element: `<button>Klicka mig</button>`,
+            description: `<p>Texten i knappar ska vara kort och tydlig, maximalt tre ord eller 15 tecken.</p>
+                          <p>En knapp kan aktivera en konfirmationstext om användaren behöver bli informerad att något skett. En konfirmationstext kan vara att ett formulär skickats eller en fil laddats ner. Konfirmationstexten ska tydligt beskriva vad som skett. Använd klassen <code>btn-confirmation</code> på konfirmationstexten.</p>`
+        },
+        {
+            title: 'Alternativ färg',
+            element: `<button class="dark">Klicka mig</button>`,
+            description: `<p>Alternativt kan den mörkare varianten av knappen användas, här används <code>--accent-color</code> istället för <code>--primary-color</code>.</p>
+                          <p>Använd klassen <code>dark</code> för att få denna styling.</p>`
+        },
+        {
+            title: 'Funktionsknappar',
+            element: `<button class="function-btn">Klicka mig <i class="bi bi-download"></i></button>`,
+            description: `<p>För att särskilja funktionsknappar från andra knappar används denna typ av knapp. En funktionsknapp bör ha en ikon i sig för att det ska vara tydligt vad knappen gör.</p>`
+        },
+        {
+            title: 'Positiv knapp',
+            element: `<button class="positive-btn">Klicka mig</button>`,
+            description: `<p>Positiva knappar används vid situationer användaren ska spara, skapa eller godkänna.</p>`
+        },
+        {
+            title: 'Negativ knapp',
+            element: `<button class="negative-btn">Klicka mig</button>`,
+            description: `<p>Negativa knappar används vid situationer användaren ska ångra, ta bort eller avbryta något. Aktioner som permanent gör material otillgängligt.</p>`
+        },
+        {
+            title: 'Neutral knapp',
+            element: `<button class="neutral-btn">Klicka mig</button>`,
+            description: `<p>Neutrala knappar används vid situationer när knappen bör finnas men inte ska väcka så mycket uppmärksamhet.</p>`
+        }
+    ]
 };
 
 const tablePageConfig = {
@@ -279,20 +299,22 @@ const tablePageConfig = {
     codeExamples: [
         {
             label: 'HTML: struktur av tabell',
-            code: `&lt;table class="class-name"&gt;
-    &lt;thead&gt;
-        &lt;tr&gt;
-            &lt;th&gt;titel1&lt;/th&gt;
-            &lt;th&gt;titel2&lt;/th&gt;
-        &lt;/tr&gt;
-    &lt;/thead&gt;
-    &lt;tbody&gt;
-        &lt;tr&gt;
-            &lt;td&gt;data1.1&lt;/td&gt;
-            &lt;td&gt;data1.2&lt;/td&gt;
-        &lt;/tr&gt;
-    &lt;/tbody&gt;
-&lt;/table&gt;`
+            code: `&lt;div class=&quot;table-wrapper&quot;&gt;
+    &lt;table class="class-name"&gt;
+        &lt;thead&gt;
+            &lt;tr&gt;
+                &lt;th&gt;titel1&lt;/th&gt;
+                &lt;th&gt;titel2&lt;/th&gt;
+            &lt;/tr&gt;
+        &lt;/thead&gt;
+        &lt;tbody&gt;
+            &lt;tr&gt;
+                &lt;td&gt;data1.1&lt;/td&gt;
+                &lt;td&gt;data1.2&lt;/td&gt;
+            &lt;/tr&gt;
+        &lt;/tbody&gt;
+    &lt;/table&gt;
+&lt;/div&gt;`
         },
         {
             label: 'CSS',
@@ -307,6 +329,11 @@ table {
 
     border-radius: 1em;
 }
+    
+/* Wrapper for horizontal scrolling */
+.table-wrapper {
+    overflow-x: scroll;
+}
 
 /* Header */
 thead {
@@ -314,15 +341,17 @@ thead {
     color: var(--text-color-light);
 }
 
+td, th{
+    padding: 1rem 0.5rem 0.5rem;
+}
+
 th {
-    padding: 1rem 1rem 0.5rem;
     text-align: left;
     font-weight: bold;
 }
 
 /* Body */
 td {
-    padding: 1.3rem 1rem;
     border-bottom: solid 1px var(--neutral-color);
     border-left: solid 1px var(--neutral-color);
 }
@@ -368,157 +397,162 @@ table.dark thead{
 .compact-table{
     border-radius: 0.5em;
 }
+
 .compact-table th,
 .compact-table td{
-    padding: 0.5rem 0.3rem;
+    padding: 0.3rem 0.3rem;
 }`
         }
     ],
-    usageHtml: `
-        <h3>Standard</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>Boktitel</th>
-                    <th>Författare</th>
-                    <th>Pris</th>
-                    <th>Sidor</th>
-                    <th>År</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Rollspel i teori och praktik</td>
-                    <td>Björn Nilsson,Anna-Karin Waldemarson</td>
-                    <td>150 kr</td>
-                    <td>146</td>
-                    <td>1988</td>
-                </tr>
-                <tr>
-                    <td>Skapa vidd</td>
-                    <td>Håkan Sandh (red)</td>
-                    <td>200 kr</td>
-                    <td>103</td>
-                    <td>2003</td>
-                </tr>
-                <tr>
-                    <td>Kreativa metoder</td>
-                    <td>Katrin Byréus</td>
-                    <td>200 kr</td>
-                    <td>232</td>
-                    <td>2012</td>
-                </tr>
-            </tbody>
-        </table>
-        <p>Som standard används denna styling, en balans mellan luftighet och kompakt.</p>
-        <p>Denna styling kräver ingen klass, se till att använda rätt struktur när du bygger upp tabellerna.</p>
-
-        <hr>
-        <h3>Fåtal kolumner</h3>
-        <table class="airy-table">
-            <thead>
-                <tr>
-                    <th>Medlemskap</th>
-                    <th>Auktoriserad</th>
-                    <th>Årsavgift</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Standard</td>
-                    <td>Ja</td>
-                    <td>350 kr</td>
-                </tr>
-                <tr>
-                    <td>Student</td>
-                    <td>Nej</td>
-                    <td>150 kr</td>
-                </tr>
-                <tr>
-                    <td>Pensionär</td>
-                    <td>Nej</td>
-                    <td>150 kr</td>
-                </tr>
-            </tbody>
-        </table>
-        <p>Denna styling används för kolumner med tre eller färre kolumner. Denna styling har mer luft. Tänk på att inte använda för mycket text i blocken.</p>
-        <p>Använd klassen <code>airy-table</code> på table elementet för att använda denna styling.</p>
-    
-        <hr>
-        <h3>Kompakt</h3>
-        <table class="compact-table">
-            <thead>
-                <tr>
-                    <th>Övning</th>
-                    <th>Syfte</th>
-                    <th>Åldersgrupp</th>
-                    <th>Tidsåtgång</th>
-                    <th>Material</th>
-                    <th>Fokusområde</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                <tr>
-                    <td>Statyövning</td>
-                    <td>Träna kroppsspråk och samarbete</td>
-                    <td>10-15 år</td>
-                    <td>20 min</td>
-                    <td>Inget</td>
-                    <td>Icke-verbal kommunikation</td>
-                </tr>
-                <tr>
-                    <td>Forumspel</td>
-                    <td>Utforska konflikter och lösningar</td>
-                    <td>13-18 år</td>
-                    <td>45 min</td>
-                    <td>Stolar och öppet golv</td>
-                    <td>Konflikthantering</td>
-                </tr>
-                <tr>
-                    <td>Improvisation</td>
-                    <td>Utveckla spontanitet och kreativitet</td>
-                    <td>Alla åldrar</td>
-                    <td>30 min</td>
-                    <td>Inget</td>
-                    <td>Kreativt uttryck</td>
-                </tr>
-            </tbody>
-        </table>
-        <p>Denna styling används för tabeller med mycket info och/eller många kolumner</p>
-        <p>Använd klassen <code>compact-table</code> på table elementet för att använda denan styling.</p>
-
-        <hr>
-        <h3>Alternativ färg</h3>
-        <table class="dark">
-            <thead>
-                <tr>
-                    <th>Övning</th>
-                    <th>Syfte</th>
-                    <th>Fokusområde</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                <tr>
-                    <td>Statyövning</td>
-                    <td>Träna kroppsspråk och samarbete</td>
-                    <td>Icke-verbal kommunikation</td>
-                </tr>
-                <tr>
-                    <td>Forumspel</td>
-                    <td>Utforska konflikter och lösningar</td>
-                    <td>Konflikthantering</td>
-                </tr>
-                <tr>
-                    <td>Improvisation</td>
-                    <td>Utveckla spontanitet och kreativitet</td>
-                    <td>Kreativt uttryck</td>
-                </tr>
-            </tbody>
-        </table>
-        <p>Alla tabeller kan få en annan färg. Använd klassen <code>dark</code> på table elementet.</p>
-    `
+    usageHtml: [
+        {
+            title: 'Standard',
+            element: `<div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Boktitel</th>
+                                <th>Författare</th>
+                                <th>Pris</th>
+                                <th>Sidor</th>
+                                <th>År</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Rollspel i teori och praktik</td>
+                                <td>Björn Nilsson,Anna-Karin Waldemarson</td>
+                                <td>150 kr</td>
+                                <td>146</td>
+                                <td>1988</td>
+                            </tr>
+                            <tr>
+                                <td>Skapa vidd</td>
+                                <td>Håkan Sandh (red)</td>
+                                <td>200 kr</td>
+                                <td>103</td>
+                                <td>2003</td>
+                            </tr>
+                            <tr>
+                                <td>Kreativa metoder</td>
+                                <td>Katrin Byréus</td>
+                                <td>200 kr</td>
+                                <td>232</td>
+                                <td>2012</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>`,
+            description: `<p>Som standard används denna styling, en balans mellan luftighet och kompakt.</p>
+                          <p>Denna styling kräver ingen klass, se till att använda rätt struktur när du bygger upp tabellerna. 
+                          Observera att <code>table</code> är inbäddad i en <code>div class="table-wrapper"</code>.</p>`
+        },
+        {
+            title: 'Fåtal kolumner',
+            element: `<div class="table-wrapper">
+            <table class="airy-table">
+                        <thead>
+                            <tr>
+                                <th>Medlemskap</th>
+                                <th>Auktoriserad</th>
+                                <th>Årsavgift</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Standard</td>
+                                <td>Ja</td>
+                                <td>350 kr</td>
+                            </tr>
+                            <tr>
+                                <td>Student</td>
+                                <td>Nej</td>
+                                <td>150 kr</td>
+                            </tr>
+                            <tr>
+                                <td>Pensionär</td>
+                                <td>Nej</td>
+                                <td>150 kr</td>
+                            </tr>
+                        </tbody>
+                    </table></div>`,
+            description: `<p>Denna styling används för kolumner med tre eller färre kolumner. Denna styling har mer luft. Tänk på att inte använda för mycket text i blocken.</p>
+                          <p>Använd klassen <code>airy-table</code> på table elementet för att använda denna styling.</p>`
+        },
+        {
+            title: 'Kompakt',
+            element: `<div class="table-wrapper"><table class="compact-table">
+                        <thead>
+                            <tr>
+                                <th>Övning</th>
+                                <th>Syfte</th>
+                                <th>Åldersgrupp</th>
+                                <th>Tidsåtgång</th>
+                                <th>Material</th>
+                                <th>Fokusområde</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Statyövning</td>
+                                <td>Träna kroppsspråk och samarbete</td>
+                                <td>10-15 år</td>
+                                <td>20 min</td>
+                                <td>Inget</td>
+                                <td>Icke-verbal kommunikation</td>
+                            </tr>
+                            <tr>
+                                <td>Forumspel</td>
+                                <td>Utforska konflikter och lösningar</td>
+                                <td>13-18 år</td>
+                                <td>45 min</td>
+                                <td>Stolar och öppet golv</td>
+                                <td>Konflikthantering</td>
+                            </tr>
+                            <tr>
+                                <td>Improvisation</td>
+                                <td>Utveckla spontanitet och kreativitet</td>
+                                <td>Alla åldrar</td>
+                                <td>30 min</td>
+                                <td>Inget</td>
+                                <td>Kreativt uttryck</td>
+                            </tr>
+                        </tbody>
+                    </table></div>`,
+            description: `<p>Denna styling används för tabeller med mycket info och/eller många kolumner.</p>
+                          <p>Använd klassen <code>compact-table</code> på table elementet för att använda denan styling.</p>`
+        },
+        {
+            title: 'Alternativ färg',
+            element: `<div class="table-wrapper"><table class="dark">
+                        <thead>
+                            <tr>
+                                <th>Övning</th>
+                                <th>Syfte</th>
+                                <th>Fokusområde</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Statyövning</td>
+                                <td>Träna kroppsspråk och samarbete</td>
+                                <td>Icke-verbal kommunikation</td>
+                            </tr>
+                            <tr>
+                                <td>Forumspel</td>
+                                <td>Utforska konflikter och lösningar</td>
+                                <td>Konflikthantering</td>
+                            </tr>
+                            <tr>
+                                <td>Improvisation</td>
+                                <td>Utveckla spontanitet och kreativitet</td>
+                                <td>Kreativt uttryck</td>
+                            </tr>
+                        </tbody>
+                    </table></div>`,
+            description: `<p>Alla tabeller kan få en annan färg. Inkludera klassen <code>dark</code> på table elementet.</p>`
+        }
+    ]
 };
 
 const menuPageConfig = {
@@ -634,58 +668,61 @@ nav a:focus-within {
 }`
         }
     ],
-    usageHtml: `
-        <h3 id="menu">Menyn</h3>
-        <nav>
-            <img   src="/imgs/Logga RAD ruta.png" alt="RAD logga" height="70">
-            <a href="#menu">Simpel länk</a>
-
-            <div class="dropdown">
-                <a class="dropbtn"  
-                    href="#menu">Gardin <i class="bi bi-caret-down-fill"></i></a>
-                <div class="dropdown-content">
+    usageHtml: [
+        {
+            title:`Menyn`,
+            element: `<nav>
+                    <img   src="/imgs/Logga RAD ruta.png" alt="RAD logga" height="70">
                     <a href="#menu">Simpel länk</a>
-                    <a href="#menu">Simpel länk</a>
-                </div>
-            </div>
-        </nav>
 
-        <p>Menyn ska innehålla loggan och länkar till olika sidor på webbplatsen. Man kan använda 
-            antingen simpla länkar eller dropdown element (som även de kan vara länkar). 
-        </p>
-        <p>Texten för varje länk ska inte vara lång, max 2 ord eller max 15 tecken. 
-            Texten ska tydligt beskriva vart användaren kommer när den länkas vidare
-        </p>
-        <p>
-            Se till att använda korrekt struktur när menyn byggs upp. Menyn består flera <code>&lt;a&gt;</code> element inne i en <code>&lt;nav&gt;</code> som är inne i <code>&lt;header&gt;</code>.
-        </p>
-        
-        <hr>
-        <h3 id="simple">Simpel länk</h3>
-        <nav>
-            <a href="#simple">Simpel länk</a>
-            <a href="#simple">Simpel länk</a>
-        </nav>
-        <p>En simple länk används om sidan inte har några viktiga undersidor</p>
-        <p>Simpla länkar behöver inga speciella klasser för att fungera.</p>
+                    <div class="dropdown">
+                        <a class="dropbtn"  
+                            href="#menu">Gardin <i class="bi bi-caret-down-fill"></i></a>
+                        <div class="dropdown-content">
+                            <a href="#menu">Simpel länk</a>
+                            <a href="#menu">Simpel länk</a>
+                        </div>
+                    </div>
+                </nav>`,
 
-        <hr>
-        <h3 id="dropdown">Gradin element</h3>
-        <nav>
-            <div class="dropdown">
-                <a class="dropbtn"  
-                    href="#dropdown">Gardin <i class="bi bi-caret-down-fill"></i></a>
-                <div class="dropdown-content">
-                    <a href="#dropdown">Simpel länk</a>
-                    <a href="#dropdown">Simpel länk</a>
-                </div>
-            </div>
-        </nav>
-        <p>Gardin element används när det finns en eller flera undersidor till en sida.</p>
-        <p>För att implementera används klassen <code>dropbox</code> på hela elementet, 
+            description: `<p>Menyn ska innehålla loggan och länkar till olika sidor på webbplatsen. Man kan använda 
+                antingen simpla länkar eller dropdown element (som även de kan vara länkar). 
+                </p>
+                <p>Texten för varje länk ska inte vara lång, max 2 ord eller max 15 tecken. 
+                    Texten ska tydligt beskriva vart användaren kommer när den länkas vidare
+                </p>
+                <p>
+                    Se till att använda korrekt struktur när menyn byggs upp. Menyn består flera <code>&lt;a&gt;</code> element inne i en <code>&lt;nav&gt;</code> som är inne i <code>&lt;header&gt;</code>.
+                </p>`
+        },
+        {    
+            title: `Simpel länk`,
+            element: `<nav>
+                    <a href="#simple">Simpel länk</a>
+                    <a href="#simple">Simpel länk</a>
+                </nav>`,
+            description: `<p>En simple länk används om sidan inte har några viktiga undersidor</p>
+                <p>Simpla länkar behöver inga speciella klasser för att fungera.</p>`
+
+        },
+        {
+            title: `Gradin element`,
+            element:`<nav>
+                    <div class="dropdown">
+                        <a class="dropbtn"  
+                            href="#dropdown">Gardin <i class="bi bi-caret-down-fill"></i></a>
+                        <div class="dropdown-content">
+                            <a href="#dropdown">Simpel länk</a>
+                            <a href="#dropdown">Simpel länk</a>
+                        </div>
+                    </div>
+                </nav>`,
+            description: `<p>Gardin element används när det finns en eller flera undersidor till en sida.</p>
+            <p>För att implementera används klassen <code>dropbox</code> på hela elementet, 
             klassen <code>dropbtn</code> på länken med högst hiarki och 
-            klassen <code>dropdown-content</code> på elementet som innehåller alla undersidor.</p>
-    `
+            klassen <code>dropdown-content</code> på elementet som innehåller alla undersidor.</p>`
+        },
+    ]
 };
 
 const colorSchemePageConfig = {
@@ -719,187 +756,277 @@ const colorSchemePageConfig = {
 }`
         }
     ],
-    usageHtml: `
-        <p>Färgschemat kan återfinnas genom flera element. När nya element ska designas ska man utgå från dessa variabler</p>
-        <table>
-            <thead>
-                <tr>
-                    <th>Färgkod</th>
-                    <th>Variabelnamn</th>
-                    <th>Exempel</th>
-                    <th>Användning</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>rgb(244, 242, 234)</td>
-                    <td>--bg-color</td>
-                    <td style="background-color: var(--bg-color); min-width: 4em;"></td>
-                    <td>Bakgrundsfärg för <code>body</code></td>
-                </tr>
-                <tr>
-                    <td>rgb(255, 179, 25)</td>
-                    <td>--primary-color</td>
-                    <td style="background-color: var(--primary-color); min-width: 4em;"></td>
-                    <td>Primär färg för designelement, står </td>
-                </tr>
-                <tr>
-                    <td>rgb(224, 143, 22)</td>
-                    <td>--primary-color-darker</td>
-                    <td style="background-color: var(--primary-color-darker); min-width: 4em;"></td>
-                    <td>Mörkare variant av primär färg, används främst när knappar i primärfärg hovras över</td>
-                </tr>
-                <tr>
-                    <td>rgb(255, 225, 148)</td>
-                    <td> --secondary-color</td>
-                    <td style="background-color: var( --secondary-color); min-width: 4em;"></td>
-                    <td>Sekundär färg, används främst som bakgrundsfärg för block</td>
-                </tr>
-                <tr>
-                    <td>rgb(211, 211, 211)</td>
-                    <td>--neutral-color</td>
-                    <td style="background-color: var(--neutral-color); min-width: 4em;"></td>
-                    <td>En neutralare färg, används främst som bakgrundsfärg för meddelanden</td>
-                </tr>
-                <tr>
-                    <td>rgb(241, 241, 241)</td>
-                    <td>--neutral-color-lighter</td>
-                    <td style="background-color: var(--neutral-color-lighter); min-width: 4em;"></td>
-                    <td>Ljusare neutral färg, används främst för element i meddelanden</td>
-                </tr>
-                <tr>
-                    <td>rgb(128, 128, 128)</td>
-                    <td>--neutral-color-darker</td>
-                    <td style="background-color: var(--neutral-color-darker); min-width: 4em;"></td>
-                    <td>Mörkare neutral färg, används främst för element i meddelanden</td>
-                </tr>
-                <tr>
-                    <td>rgb(22, 65, 106)</td>
-                    <td>--accent-color</td>
-                    <td style="background-color: var(--accent-color); min-width: 4em;"></td>
-                    <td>En accentfärg som bryter av från primärfärgen, används främst för element och ibland som bakgrundsfärg</td>
-                </tr>
-                <tr>
-                    <td>rgb(12, 29, 44)</td>
-                    <td>--accent-color-darker</td>
-                    <td style="background-color: var(--accent-color-darker); min-width: 4em;"></td>
-                    <td>Mörkare variant av accentfärg, används främst när knappar i accentfärg hovras över</td>
-                </tr>
-                <tr>
-                    <td>rgb(106, 62, 22)</td>
-                    <td>--text-focus-btn</td>
-                    <td style="background-color: var(--text-focus-btn); min-width: 4em;"></td>
-                    <td>En färg för att indikera att länkar i menyn hovras över</td>
-                </tr>
-                <tr>
-                    <td>rgb(19, 19, 19)</td>
-                    <td>--text-color-dark</td>
-                    <td style="background-color: var(--text-color-dark); min-width: 4em;"></td>
-                    <td>En mörk textfärg, är den primära färgen för text</td>
-                </tr>
-                <tr>
-                    <td>rgb(252, 252, 252)</td>
-                    <td>--text-color-light</td>
-                    <td style="background-color: var(--text-color-light); min-width: 4em;"></td>
-                    <td>En ljus textfärg, används när bakgrunden är mörkare, som <code>--accent-color</code>, <code>--accent-color-darker</code>, även i fetstil för knappar i <code>--primary-color</code></td>
-                </tr>
-                <tr>
-                    <td>rgb(243, 243, 243)</td>
-                    <td>--text-color-light-btn-hover</td>
-                    <td style="background-color: var(--text-color-light-btn-hover); min-width: 4em;"></td>
-                    <td>En något mörkare variant av <code>--text-color-light</code>, används främst när knappar med ljus textfärg hovras över</td>
-                </tr>
-                <tr>
-                    <td>rgb(216, 37, 37)</td>
-                    <td>--text-color-error</td>
-                    <td style="background-color: var(--text-color-error); min-width: 4em;"></td>
-                    <td>Textfärg för korta errormeddelande</td>
-                </tr>
-                <tr>
-                    <td>rgb(185, 52, 52)</td>
-                    <td>--negative-color-btn</td>
-                    <td style="background-color: var(--negative-color-btn); min-width: 4em;"></td>
-                    <td>En färg när knappar med avbrytande funktionalitet</td>
-                </tr>
-                <tr>
-                    <td>rgb(131, 37, 37)</td>
-                    <td>--negative-color-btn-darker</td>
-                    <td style="background-color: var(--negative-color-btn-darker); min-width: 4em;"></td>
-                    <td>En färg för knappar med färgen <code>--negative-color-btn</code> hovras över</td>
-                </tr>
-            </tbody>
-        </table>
-    `
+    usageHtml: [
+        {
+            title: 'Färgschema',
+            element: `<p>Färgschemat kan återfinnas genom flera element. När nya element ska designas ska man utgå från dessa variabler</p>
+                      <table>
+                          <thead>
+                              <tr>
+                                  <th>Färgkod</th>
+                                  <th>Variabelnamn</th>
+                                  <th>Exempel</th>
+                                  <th>Användning</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr>
+                                  <td>rgb(244, 242, 234)</td>
+                                  <td>--bg-color</td>
+                                  <td style="background-color: var(--bg-color); min-width: 4em;"></td>
+                                  <td>Bakgrundsfärg för <code>body</code></td>
+                              </tr>
+                              <tr>
+                                  <td>rgb(255, 179, 25)</td>
+                                  <td>--primary-color</td>
+                                  <td style="background-color: var(--primary-color); min-width: 4em;"></td>
+                                  <td>Primär färg för designelement, står</td>
+                              </tr>
+                              <tr>
+                                  <td>rgb(224, 143, 22)</td>
+                                  <td>--primary-color-darker</td>
+                                  <td style="background-color: var(--primary-color-darker); min-width: 4em;"></td>
+                                  <td>Mörkare variant av primär färg, används främst när knappar i primärfärg hovras över</td>
+                              </tr>
+                              <tr>
+                                  <td>rgb(255, 225, 148)</td>
+                                  <td>--secondary-color</td>
+                                  <td style="background-color: var(--secondary-color); min-width: 4em;"></td>
+                                  <td>Sekundär färg, används främst som bakgrundsfärg för block</td>
+                              </tr>
+                              <tr>
+                                  <td>rgb(211, 211, 211)</td>
+                                  <td>--neutral-color</td>
+                                  <td style="background-color: var(--neutral-color); min-width: 4em;"></td>
+                                  <td>Neutral färg för kantlinjer och bakgrunder</td>
+                              </tr>
+                              <tr>
+                                  <td>rgb(241, 241, 241)</td>
+                                  <td>--neutral-color-lighter</td>
+                                  <td style="background-color: var(--neutral-color-lighter); min-width: 4em;"></td>
+                                  <td>Ljusare neutral färg för bakgrunder och kort</td>
+                              </tr>
+                              <tr>
+                                  <td>rgb(128, 128, 128)</td>
+                                  <td>--neutral-color-darker</td>
+                                  <td style="background-color: var(--neutral-color-darker); min-width: 4em;"></td>
+                                  <td>Mörkare neutral färg för text och detaljer</td>
+                              </tr>
+                              <tr>
+                                  <td>rgb(22, 65, 106)</td>
+                                  <td>--accent-color</td>
+                                  <td style="background-color: var(--accent-color); min-width: 4em;"></td>
+                                  <td>Accentfärg som används för att skapa kontrast</td>
+                              </tr>
+                              <tr>
+                                <td>rgb(12, 29, 44)</td>
+                                <td>--accent-color-darker</td>
+                                <td style="background-color: var(--accent-color-darker); min-width: 4em;"></td>
+                                <td>Mörkare variant av accentfärg, används främst när knappar i accentfärg hovras över</td>
+                            </tr>
+                            <tr>
+                                <td>rgb(106, 62, 22)</td>
+                                <td>--text-focus-btn</td>
+                                <td style="background-color: var(--text-focus-btn); min-width: 4em;"></td>
+                                <td>En färg för att indikera att länkar i menyn hovras över</td>
+                            </tr>
+                            <tr>
+                                <td>rgb(19, 19, 19)</td>
+                                <td>--text-color-dark</td>
+                                <td style="background-color: var(--text-color-dark); min-width: 4em;"></td>
+                                <td>En mörk textfärg, är den primära färgen för text</td>
+                            </tr>
+                            <tr>
+                                <td>rgb(252, 252, 252)</td>
+                                <td>--text-color-light</td>
+                                <td style="background-color: var(--text-color-light); min-width: 4em;"></td>
+                                <td>En ljus textfärg, används när bakgrunden är mörkare, som <code>--accent-color</code>, <code>--accent-color-darker</code>, även i fetstil för knappar i <code>--primary-color</code></td>
+                            </tr>
+                            <tr>
+                                <td>rgb(243, 243, 243)</td>
+                                <td>--text-color-light-btn-hover</td>
+                                <td style="background-color: var(--text-color-light-btn-hover); min-width: 4em;"></td>
+                                <td>En något mörkare variant av <code>--text-color-light</code>, används främst när knappar med ljus textfärg hovras över</td>
+                            </tr>
+                            <tr>
+                                <td>rgb(216, 37, 37)</td>
+                                <td>--text-color-error</td>
+                                <td style="background-color: var(--text-color-error); min-width: 4em;"></td>
+                                <td>Textfärg för korta errormeddelande</td>
+                            </tr>
+                            <tr>
+                                <td>rgb(185, 52, 52)</td>
+                                <td>--negative-color-btn</td>
+                                <td style="background-color: var(--negative-color-btn); min-width: 4em;"></td>
+                                <td>En färg när knappar med avbrytande funktionalitet</td>
+                            </tr>
+                            <tr>
+                                <td>rgb(131, 37, 37)</td>
+                                <td>--negative-color-btn-darker</td>
+                                <td style="background-color: var(--negative-color-btn-darker); min-width: 4em;"></td>
+                                <td>En färg för knappar med färgen <code>--negative-color-btn</code> hovras över</td>
+                            </tr>
+                          </tbody>
+                      </table>`,
+            description: ''
+        }
+    ]
+                
+    
 };
 
 const formPageConfig = {
     title: 'Formulär',
-    description: 'Formulär används för kommentarsfält och kontaktformulär på RAD:s webbplattformar.',
+    description: 'Formulär används för kommentarsfält, kontaktformulär och anmälningar till evenemang.',
     image: {
         src: '/imgs/Exempel formulär.png',
-        alt: 'Bild av ett kontaktformulär med fälten namn, e-post och meddelande'
+        alt: 'Bild av ett kontaktformulär med fälten e-post, ämne, meddelande och bilaga'
     },
     codeExamples: [
         {
             label: 'HTML: struktur av formulär',
-            code: `    &lt;link rel&#x3D;&quot;preconnect&quot; href&#x3D;&quot;https:&#x2F;&#x2F;fonts.googleapis.com&quot;&gt;
-    &lt;link rel&#x3D;&quot;preconnect&quot; href&#x3D;&quot;https:&#x2F;&#x2F;fonts.gstatic.com&quot; crossorigin&gt;
-    &lt;link href&#x3D;&quot;https:&#x2F;&#x2F;fonts.googleapis.com&#x2F;css2?family&#x3D;Raleway:wght@100..900&amp;display&#x3D;swap&quot; rel&#x3D;&quot;stylesheet&quot;&gt;
-    &lt;link href&#x3D;&quot;https:&#x2F;&#x2F;fonts.googleapis.com&#x2F;css2?family&#x3D;Oswald:wght@200..700&amp;family&#x3D;Raleway:wght@100..900&amp;display&#x3D;swap&quot; rel&#x3D;&quot;stylesheet&quot;&gt;`
+            code: `&lt;form action=&quot;url&quot;&gt;
+    &lt;fieldset&gt;
+        &lt;legend&gt; Kontakta oss &lt;/legend&gt;
+        &lt;div class=&quot;form-row&quot;&gt;
+            &lt;label for=&quot;name&quot;&gt;Namn&lt;/label&gt;
+            &lt;input type=&quot;text&quot; id=&quot;name&quot; name=&quot;name&quot; placeholder=&quot;Namn&quot;&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;form-row&quot;&gt;
+            &lt;label for=&quot;email&quot;&gt;E-post&lt;/label&gt;
+            &lt;input type=&quot;email&quot; id=&quot;email&quot; name=&quot;email&quot; placeholder=&quot;namn@exempel.se&quot;&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;form-row&quot;&gt;
+            &lt;label for=&quot;topic&quot;&gt;Ämne&lt;/label&gt;
+            &lt;select id=&quot;topic&quot; name=&quot;topic&quot;&gt;
+                &lt;option value=&quot;&quot;&gt;Välj ett ämne&lt;/option&gt;
+                &lt;option value=&quot;support&quot;&gt;Support&lt;/option&gt;
+                &lt;option value=&quot;feedback&quot;&gt;Feedback&lt;/option&gt;
+                &lt;option value=&quot;collaboration&quot;&gt;Samarbete&lt;/option&gt;
+            &lt;/select&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;form-row&quot;&gt;
+            &lt;label&gt;Prioritet&lt;/label&gt;
+            &lt;div class=&quot;radio-group&quot;&gt;
+                &lt;label&gt;&lt;input type=&quot;radio&quot; name=&quot;priority&quot; value=&quot;low&quot;&gt; Låg&lt;/label&gt;
+                &lt;label&gt;&lt;input type=&quot;radio&quot; name=&quot;priority&quot; value=&quot;normal&quot;&gt; Normal&lt;/label&gt;
+                &lt;label&gt;&lt;input type=&quot;radio&quot; name=&quot;priority&quot; value=&quot;high&quot;&gt; Hög&lt;/label&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;form-row&quot;&gt;
+            &lt;label&gt;Nyhetsbrev&lt;/label&gt;
+            &lt;div class=&quot;checkbox-group&quot;&gt;
+                &lt;label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;newsletter&quot; name=&quot;newsletter&quot;&gt; Ja tack, skicka nyheter&lt;/label&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;form-row&quot;&gt;
+            &lt;label for=&quot;message&quot;&gt;Meddelande&lt;/label&gt;
+            &lt;textarea id=&quot;message&quot; name=&quot;message&quot; rows=&quot;5&quot; placeholder=&quot;Skriv ditt meddelande här...&quot;&gt;&lt;/textarea&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;form-row&quot;&gt;
+            &lt;label for=&quot;file&quot;&gt;Bilaga&lt;/label&gt;
+            &lt;input type=&quot;file&quot; id=&quot;file&quot; name=&quot;file&quot;&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;form-actions&quot;&gt;
+            &lt;input type=&quot;submit&quot; class=&quot;button positive-btn&quot; value=&quot;Skicka&quot;&gt;
+            &lt;button type=&quot;reset&quot; class=&quot;button neutral-btn&quot;&gt;Rensa&lt;/button&gt;
+        &lt;/div&gt;
+    &lt;/fieldset&gt;
+&lt;/form&gt;`
         },
         {
             label: 'CSS',
-            code: `/*Body text*/
-body{
-    font-family: "Raleway", sans-serif;
-    font-style: normal;
-    color: var(--text-color-dark);
+            code: `/*Form*/
+form{
+    width: 100%;
+}
+form fieldset{
+    border: solid 1px var(--neutral-color);
+    border-radius: 1em;
+    padding: 1em;
+    margin: 0.2em 0 5% 0;
 }
 
-/*Navigation font*/
-nav{
-    font-family: "Oswald", sans-serif;
-    font-size: 1.2em;
+form .form-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4em;
+    margin-bottom: 1.2em;
+}
+
+form legend {
+    padding: 0 0.75em;
+    font-weight: 700;
+}
+
+form label {
     font-weight: 600;
 }
 
-/*Links inside the navigation */
-nav a {
-    text-decoration: none;
-    color: var(--text-color-dark);
+/* Form inputs */
+form input[type="text"],
+form input[type="email"],
+form input[type="tel"],
+form input[type="password"],
+form input[type="date"],
+form input[type="number"],
+form input[type="file"],
+form select,
+form textarea {
+    width: 100%;
+    border: solid 1px var(--primary-color);
+    border-radius: 1em;
+    padding: 1em;
+    margin-top: 0.2em;
+    font-family: inherit;
+    font-size: 1rem;
+    background-color: white;
 }
 
-/* Headings*/
-h1{
-    font-family: "Oswald", sans-serif;
-    font-weight: bold;
-}
-h2{
-    font-family: "Oswald", sans-serif;
-    font-weight: 400;
-}
-h3{
-    font-family: "Oswald", sans-serif;
-    font-weight: 300;
+form input[type="file"]:hover,
+form input[type="file"]:focus {
+    background-color: var(--neutral-color-lighter);
+    cursor: pointer;
 }
 
-/* Special text */
-.error-text{
-    color: var(--text-color-error);
-    font-weight: 600;
+.radio-group,
+.checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25em;
+    align-items: center;
+    margin-top: 0.2em;
 }
 
-.btn-confirmation{
-    font-size: small;
-    margin: 0.3em; 
+.radio-group label,
+.checkbox-group label {
+    font-weight: normal;
 }
 
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1em;
+    flex-wrap: wrap;
+    margin-top: 1em;
+}
+
+form input:focus,
+form select:focus,
+form textarea:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 0.35rem rgba(255, 179, 25, 0.18);
+}
+ 
 /* Buttons */
-button{
+button, 
+.button,
+input[type="file"]::file-selector-button{
     min-width: 48px;
     min-height: 48px;
 
-    font-family: "Raleway", sans-serif;
+    font-family: Raleway, sans-serif;
     font-size: medium;
     font-weight: 700;
     text-transform: uppercase;
@@ -912,17 +1039,33 @@ button{
     cursor: pointer;
 }
 
-button .dark{
-background-color: var(--accent-color);
+input[type="file"]::file-selector-button,
+.function-btn{
+    font-size: small;
+    padding: 0em 1em;
+    border-radius: 0;
 }
 
-button:hover {
+.neutral-btn{
+    background-color: var(--neutral-color);
+    color: var(--text-color-dark);
+    font-size: small;
+    border: solid 2px var(--neutral-color-darker);
+}
+
+button:hover, 
+.button:hover, 
+button:focus,
+.button:focus {
     background-color: var(--primary-color-darker);
     color: var(--text-color-light-btn-hover);
+    
+    transition: background 0.2s ease;
 }
 
-button .dark:hover{
-    background-color: var(--accent-color-darker);
+.neutral-btn:hover,
+.neutral-btn:focus-within{
+    background-color: var(--neutral-color-darker);
 }`
         }
     ],
@@ -1009,7 +1152,7 @@ const routes = {
 function handleRoute() {
     const hash = window.location.hash || '#/'; // Default to home if no hash
     const content = routes[hash] ? routes[hash]() : '<h1>Page Not Found</h1>';
-    //document.getElementById('content').innerHTML = content;
+    document.getElementById('content').innerHTML = content;
 }
 
 // Listen for navigation events
