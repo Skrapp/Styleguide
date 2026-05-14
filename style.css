@@ -316,6 +316,22 @@ button.dark:focus-within{
     background-color: var(--neutral-color-darker);
 }
 
+fieldset{
+    border: solid 1px var(--neutral-color);
+    border-radius: 1em;
+    padding: 1em;
+    margin: 0.2em 0 1em 0;
+}
+
+/*Form*/
+input[type="text"], input[type="email"], textarea{
+    width: 100%;
+    border: solid 1px var(--primary-color);
+    border-radius: 1em;
+    padding: 1em;
+    margin: 0.2em 0 1em 0;
+}
+
 code{
     background-color: #eee;
     border: 1px solid gray;

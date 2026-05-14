@@ -832,7 +832,105 @@ const colorSchemePageConfig = {
     `
 };
 
-// ============ Page Functions ============
+const formPageConfig = {
+    title: 'Formulär',
+    description: 'Formulär används för kommentarsfält och kontaktformulär på RAD:s webbplattformar.',
+    image: {
+        src: '/imgs/Exempel formulär.png',
+        alt: 'Bild av ett kontaktformulär med fälten namn, e-post och meddelande'
+    },
+    codeExamples: [
+        {
+            label: 'HTML: struktur av formulär',
+            code: `    &lt;link rel&#x3D;&quot;preconnect&quot; href&#x3D;&quot;https:&#x2F;&#x2F;fonts.googleapis.com&quot;&gt;
+    &lt;link rel&#x3D;&quot;preconnect&quot; href&#x3D;&quot;https:&#x2F;&#x2F;fonts.gstatic.com&quot; crossorigin&gt;
+    &lt;link href&#x3D;&quot;https:&#x2F;&#x2F;fonts.googleapis.com&#x2F;css2?family&#x3D;Raleway:wght@100..900&amp;display&#x3D;swap&quot; rel&#x3D;&quot;stylesheet&quot;&gt;
+    &lt;link href&#x3D;&quot;https:&#x2F;&#x2F;fonts.googleapis.com&#x2F;css2?family&#x3D;Oswald:wght@200..700&amp;family&#x3D;Raleway:wght@100..900&amp;display&#x3D;swap&quot; rel&#x3D;&quot;stylesheet&quot;&gt;`
+        },
+        {
+            label: 'CSS',
+            code: `/*Body text*/
+body{
+    font-family: "Raleway", sans-serif;
+    font-style: normal;
+    color: var(--text-color-dark);
+}
+
+/*Navigation font*/
+nav{
+    font-family: "Oswald", sans-serif;
+    font-size: 1.2em;
+    font-weight: 600;
+}
+
+/*Links inside the navigation */
+nav a {
+    text-decoration: none;
+    color: var(--text-color-dark);
+}
+
+/* Headings*/
+h1{
+    font-family: "Oswald", sans-serif;
+    font-weight: bold;
+}
+h2{
+    font-family: "Oswald", sans-serif;
+    font-weight: 400;
+}
+h3{
+    font-family: "Oswald", sans-serif;
+    font-weight: 300;
+}
+
+/* Special text */
+.error-text{
+    color: var(--text-color-error);
+    font-weight: 600;
+}
+
+.btn-confirmation{
+    font-size: small;
+    margin: 0.3em; 
+}
+
+/* Buttons */
+button{
+    min-width: 48px;
+    min-height: 48px;
+
+    font-family: "Raleway", sans-serif;
+    font-size: medium;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--text-color-light);
+
+    background-color: var(--primary-color);
+    border: none;
+    border-radius: 0.75em;
+    padding: 0.75em 1.25em;
+    cursor: pointer;
+}
+
+button .dark{
+background-color: var(--accent-color);
+}
+
+button:hover {
+    background-color: var(--primary-color-darker);
+    color: var(--text-color-light-btn-hover);
+}
+
+button .dark:hover{
+    background-color: var(--accent-color-darker);
+}`
+        }
+    ],
+    usageHtml: `
+        `
+};
+
+//  ========== Pages ============
 
 function getHomePage(){
     return `<h1>Welcome home</h1>
@@ -911,7 +1009,7 @@ const routes = {
 function handleRoute() {
     const hash = window.location.hash || '#/'; // Default to home if no hash
     const content = routes[hash] ? routes[hash]() : '<h1>Page Not Found</h1>';
-    document.getElementById('content').innerHTML = content;
+    //document.getElementById('content').innerHTML = content;
 }
 
 // Listen for navigation events
