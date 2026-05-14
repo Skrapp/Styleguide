@@ -30,10 +30,14 @@
     --text-color-light:rgb(252, 252, 252);
 } */
 
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
 body{
-    width: 100%;
-    max-width: 70em;
-    margin: 0 auto;
+    margin: 0;
 
     font-family: Raleway, sans-serif;
     font-style: normal;
@@ -43,7 +47,13 @@ body{
 }
 
 main{
+    max-width: 1000px;
+    
+    width: 90%;
+    margin: 0 auto;
+
     padding: 1em;
+    margin: 0 auto;
 }
 
 footer{
@@ -56,6 +66,8 @@ footer{
 header{
     position: sticky;
     top: 0;
+    width: 100%;
+    z-index: 20;
 }
 
 /*Navigation menu*/
@@ -63,13 +75,17 @@ nav{
     font-family: Oswald, sans-serif;
     font-size: 1.2em;
     font-weight: 600;
-    text-align: center;
 
     background-color:var(--secondary-color);
 
     display: flex;
     align-items: center;
-    justify-content: center;   
+    justify-content: center;
+    flex-wrap: wrap;
+
+    gap: 1rem;
+
+    padding: 0 1rem;
 }
 
 /* Links inside the navbar 
@@ -251,7 +267,9 @@ table.dark thead{
 }
 
 /* Buttons */
-button{
+button, 
+.button,
+input[type="file"]::file-selector-button{
     min-width: 48px;
     min-height: 48px;
 
@@ -268,7 +286,10 @@ button{
     cursor: pointer;
 }
 
+input[type="file"]::file-selector-button,
 .function-btn{
+    font-size: small;
+    padding: 0em 1em;
     border-radius: 0;
 }
 
@@ -294,7 +315,9 @@ button.dark{
 }
 
 button:hover, 
-button:focus {
+.button:hover, 
+button:focus,
+.button:focus {
     background-color: var(--primary-color-darker);
     color: var(--text-color-light-btn-hover);
     
@@ -316,20 +339,87 @@ button.dark:focus-within{
     background-color: var(--neutral-color-darker);
 }
 
-fieldset{
+/*Form*/
+form{
+    width: 100%;
+}
+form fieldset{
     border: solid 1px var(--neutral-color);
     border-radius: 1em;
     padding: 1em;
-    margin: 0.2em 0 1em 0;
+    margin: 0.2em 0 5% 0;
 }
 
-/*Form*/
-input[type="text"], input[type="email"], textarea{
+form .form-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4em;
+    margin-bottom: 1.2em;
+}
+
+form legend {
+    padding: 0 0.75em;
+    font-weight: 700;
+}
+
+form label {
+    font-weight: 600;
+}
+
+/* Form inputs */
+form input[type="text"],
+form input[type="email"],
+form input[type="tel"],
+form input[type="password"],
+form input[type="date"],
+form input[type="number"],
+form input[type="file"],
+form select,
+form textarea {
     width: 100%;
     border: solid 1px var(--primary-color);
     border-radius: 1em;
     padding: 1em;
-    margin: 0.2em 0 1em 0;
+    margin-top: 0.2em;
+    font-family: inherit;
+    font-size: 1rem;
+    background-color: white;
+}
+
+form input[type="file"]:hover,
+form input[type="file"]:focus {
+    background-color: var(--neutral-color-lighter);
+    cursor: pointer;
+}
+
+.radio-group,
+.checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25em;
+    align-items: center;
+    margin-top: 0.2em;
+}
+
+.radio-group label,
+.checkbox-group label {
+    font-weight: normal;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1em;
+    flex-wrap: wrap;
+    margin-top: 1em;
+}
+
+form input:focus,
+form select:focus,
+form textarea:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 0.35rem rgba(255, 179, 25, 0.18);
 }
 
 code{
