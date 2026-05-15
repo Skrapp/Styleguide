@@ -4,6 +4,7 @@
     --primary-color:rgb(255, 179, 25);
     --primary-color-darker:rgb(224, 143, 22);
     --secondary-color:rgb(255, 225, 148);
+    --secondary-color-transparent:rgba(255, 225, 148, 0.25);
     --neutral-color:rgb(211, 211, 211);
     --neutral-color-lighter:rgb(241, 241, 241);
     --neutral-color-darker:rgb(128, 128, 128);
@@ -14,8 +15,9 @@
     --text-color-light:rgb(252, 252, 252);
     --text-color-light-btn-hover:rgb(243, 243, 243);
     --text-color-error:rgb(216, 37, 37);
-    --negative-color-btn:rgb(185, 52, 52);
-    --negative-color-btn-darker:rgb(131, 37, 37);
+    --negative-color:rgb(185, 52, 52);
+    --negative-color-darker:rgb(131, 37, 37);
+    --negative-color-transparent:rgba(185, 52, 52, 0.12);
 }
 
 /* Dark Mode */
@@ -295,8 +297,7 @@ input[type="file"]::file-selector-button{
 }
 
 input[type="file"]::file-selector-button,
-.function-btn{
-    font-size: small;
+button.function-action{
     padding: 0em 1em;
     border-radius: 0;
 }
@@ -305,21 +306,25 @@ button.dark{
     background-color: var(--accent-color);
 }
 
-.positive-btn{
+button.positive{
     background-color: var(--secondary-color);
     color: var(--text-color-dark);
     border: solid 2px var(--primary-color);
 }
 
-.negative-btn{
-    background-color: var(--negative-color-btn);
+button.negative{
+    background-color: var(--negative-color);
 }
 
-.neutral-btn{
+button.neutral{
     background-color: var(--neutral-color);
     color: var(--text-color-dark);
-    font-size: small;
     border: solid 2px var(--neutral-color-darker);
+}
+
+button.small{
+    font-size: small;
+    padding: 0.5rem 1rem;
 }
 
 button:hover, 
@@ -337,13 +342,13 @@ button.dark:focus-within{
     background-color: var(--accent-color-darker);
 }
 
-.negative-btn:hover,
-.negative-btn:focus-within{
-    background-color: var(--negative-color-btn-darker);
+button.negative:hover,
+button.negative:focus-within{
+    background-color: var(--negative-color-darker);
 }
 
-.neutral-btn:hover,
-.neutral-btn:focus-within{
+button.neutral:hover,
+button.neutral:focus-within{
     background-color: var(--neutral-color-darker);
 }
 
@@ -434,6 +439,41 @@ form textarea:focus {
     border: solid 1px var(--neutral-color);
     border-radius: 1em;
     padding: 1em;
+}
+
+/* Alert */
+.alert {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    gap: 1rem;
+    border: 1px solid;
+    border-radius: 1em;
+    padding: 1rem;
+    background-color: white;
+}
+
+.content-alert {
+    flex: 1;
+}
+
+.success-alert {
+    border-color: var(--secondary-color);
+    background-color: var(--secondary-color-transparent);
+}
+
+.error-alert {
+    border-color: var(--negative-color);
+    background-color: var(--negative-color-transparent);
+    color: var(--negative-color-darker);
+}
+
+.info-alert {
+    border-color: var(--neutral-color-darker);
+}
+
+.close-alert {
+    padding: 0.75em 1em;
 }
 
 code{

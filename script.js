@@ -131,18 +131,11 @@ button{
     cursor: pointer;
 }
 
-button .dark{
-background-color: var(--accent-color);
-}
-
 button:hover {
     background-color: var(--primary-color-darker);
     color: var(--text-color-light-btn-hover);
 }
-
-button .dark:hover{
-    background-color: var(--accent-color-darker);
-}`
+/* Finns fler stylings för buttons */`
         }
     ],
     usageHtml: [
@@ -165,7 +158,8 @@ button .dark:hover{
             element: `<button>Klicka mig</button>`,
             description: `<p>Knappar används för flertalet olika situationer, så som formulär eller Call-to-Action element. För mer specifika situationer <a href="/#/button">läs mer här.</a></p>
                           <p>Texten i knappar ska vara kort och tydlig, maximalt tre ord eller 15 tecken.</p>
-                          <p>En knapp kan aktivera en konfirmationstext om användaren behöver bli informerad att något skett. En konfirmationstext kan vara att ett formulär skickats eller en fil laddats ner. Konfirmationstexten ska tydligt beskriva vad som skett. Använd klassen <code>btn-confirmation</code> på konfirmationstexten.</p>`
+                          <p>En knapp kan aktivera en konfirmationstext om användaren behöver bli informerad att något skett. En konfirmationstext kan vara att ett text kopierats eller en fil laddats ner. 
+                          Konfirmationstexten ska tydligt beskriva vad som skett. Använd klassen <code>btn-confirmation</code> på konfirmationstexten.</p>`
         },
         {
             title: 'Special text',
@@ -186,11 +180,13 @@ const buttonPageConfig = {
         {
             label: 'CSS',
             code: `/* Buttons */
-button{
+button, 
+.button,
+input[type="file"]::file-selector-button{
     min-width: 48px;
     min-height: 48px;
 
-    font-family: "Raleway", sans-serif;
+    font-family: Raleway, sans-serif;
     font-size: medium;
     font-weight: 700;
     text-transform: uppercase;
@@ -203,7 +199,10 @@ button{
     cursor: pointer;
 }
 
-.function-btn{
+input[type="file"]::file-selector-button,
+button.function-action{
+    font-size: small;
+    padding: 0em 1em;
     border-radius: 0;
 }
 
@@ -211,30 +210,35 @@ button.dark{
     background-color: var(--accent-color);
 }
 
-.positive-btn{
+button.positive{
     background-color: var(--secondary-color);
     color: var(--text-color-dark);
     border: solid 2px var(--primary-color);
 }
 
-.negative-btn{
-    background-color: var(--negative-color-btn);
+button.negative{
+    background-color: var(--negative-color);
 }
 
-.neutral-btn{
+button.neutral{
     background-color: var(--neutral-color);
     color: var(--text-color-dark);
-    font-size: small;
     border: solid 2px var(--neutral-color-darker);
 }
 
+button.small{
+    font-size: small;
+    padding: 0.5rem 1rem;
+}
+
 button:hover, 
-button:focus {
+.button:hover, 
+button:focus,
+.button:focus {
     background-color: var(--primary-color-darker);
     color: var(--text-color-light-btn-hover);
-
+    
     transition: background 0.2s ease;
-
 }
 
 button.dark:hover,
@@ -242,13 +246,13 @@ button.dark:focus-within{
     background-color: var(--accent-color-darker);
 }
 
-.negative-btn:hover,
-.negative-btn:focus-within{
-    background-color: var(--negative-color-btn-darker);
+button.negative:hover,
+button.negative:focus-within{
+    background-color: var(--negative-color-darker);
 }
 
-.neutral-btn:hover,
-.neutral-btn:focus-within{
+button.neutral:hover,
+button.neutral:focus-within{
     background-color: var(--neutral-color-darker);
 }`
         }
@@ -268,23 +272,34 @@ button.dark:focus-within{
         },
         {
             title: 'Funktionsknappar',
-            element: `<button class="function-btn">Klicka mig <i class="bi bi-download"></i></button>`,
-            description: `<p>För att särskilja funktionsknappar från andra knappar används denna typ av knapp. En funktionsknapp bör ha en ikon i sig för att det ska vara tydligt vad knappen gör.</p>`
+            element: `<button class="function-action">Klicka mig <i class="bi bi-download"></i></button>`,
+            description: `<p>För att särskilja funktionsknappar från andra knappar används denna typ av knapp. En funktionsknapp bör ha en ikon i sig för att det ska vara tydligt vad knappen gör.</p>
+            <p>Använd klassen <code>function-action</code> för att få denna styling.`
         },
         {
             title: 'Positiv knapp',
-            element: `<button class="positive-btn">Klicka mig</button>`,
-            description: `<p>Positiva knappar används vid situationer användaren ska spara, skapa eller godkänna.</p>`
+            element: `<button class="positive">Klicka mig</button>`,
+            description: `<p>Positiva knappar används vid situationer användaren ska spara, skapa eller godkänna.</p>
+            <p>Använd klassen <code>positive</code> för att få denna styling.`
         },
         {
             title: 'Negativ knapp',
-            element: `<button class="negative-btn">Klicka mig</button>`,
-            description: `<p>Negativa knappar används vid situationer användaren ska ångra, ta bort eller avbryta något. Aktioner som permanent gör material otillgängligt.</p>`
+            element: `<button class="negative">Klicka mig</button>`,
+            description: `<p>Negativa knappar används vid situationer användaren ska ångra, ta bort eller avbryta något.
+             Aktioner som permanent gör material otillgängligt.</p>
+             <p>Använd klassen <code>negative</code> för att få denna styling.`
         },
         {
             title: 'Neutral knapp',
-            element: `<button class="neutral-btn">Klicka mig</button>`,
-            description: `<p>Neutrala knappar används vid situationer när knappen bör finnas men inte ska väcka så mycket uppmärksamhet.</p>`
+            element: `<button class="neutral">Klicka mig</button>`,
+            description: `<p>Neutrala knappar används vid situationer när knappen bör finnas men inte ska väcka så mycket uppmärksamhet.</p>
+            <p>Använd klassen <code>neutral</code> för att få denna styling.`
+        },
+        {
+            title: 'Mindre storlek',
+            element: `<button class="small">Klicka mig</button>`,
+            description: `<p>Knappar kan vara mindre. Detta kan kobineras med andra stylings</p>
+            <p>Använd klassen <code>small</code> för att få denna styling.`
         }
     ]
 };
@@ -741,6 +756,7 @@ const colorSchemePageConfig = {
     --primary-color:rgb(255, 179, 25);
     --primary-color-darker:rgb(224, 143, 22);
     --secondary-color:rgb(255, 225, 148);
+    --secondary-color-transparent:rgba(255, 225, 148, 0.25);
     --neutral-color:rgb(211, 211, 211);
     --neutral-color-lighter:rgb(241, 241, 241);
     --neutral-color-darker:rgb(128, 128, 128);
@@ -751,8 +767,9 @@ const colorSchemePageConfig = {
     --text-color-light:rgb(252, 252, 252);
     --text-color-light-btn-hover:rgb(243, 243, 243);
     --text-color-error:rgb(216, 37, 37);
-    --negative-color-btn:rgb(185, 52, 52);
-    --negative-color-btn-darker:rgb(131, 37, 37);
+    --negative-color:rgb(185, 52, 52);
+    --negative-color-darker:rgb(131, 37, 37);
+    --negative-color-transparent:rgba(185, 52, 52, 0.12);
 }`
         }
     ],
@@ -793,6 +810,12 @@ const colorSchemePageConfig = {
                                   <td>--secondary-color</td>
                                   <td style="background-color: var(--secondary-color); min-width: 4em;"></td>
                                   <td>Sekundär färg, används främst som bakgrundsfärg för block</td>
+                              </tr>
+                              <tr>
+                                  <td>rgba(255, 225, 148, 0.25)</td>
+                                  <td>--secondary-color-transparent</td>
+                                  <td style="background-color: var(--secondary-color-transparent); min-width: 4em;"></td>
+                                  <td>Transparent variant av sekundärfärgen för bakgrunds- och kortblock</td>
                               </tr>
                               <tr>
                                   <td>rgb(211, 211, 211)</td>
@@ -859,6 +882,12 @@ const colorSchemePageConfig = {
                                 <td>--negative-color-btn</td>
                                 <td style="background-color: var(--negative-color-btn); min-width: 4em;"></td>
                                 <td>En färg när knappar med avbrytande funktionalitet</td>
+                            </tr>
+                            <tr>
+                                <td>rgba(185, 52, 52, 0.12)</td>
+                                <td>--negative-color-transparent</td>
+                                <td style="background-color: var(--negative-color-transparent); min-width: 4em;"></td>
+                                <td>Transparent variant av negativ knappfärg, används för felbakgrunder och varningar</td>
                             </tr>
                             <tr>
                                 <td>rgb(131, 37, 37)</td>
@@ -928,8 +957,8 @@ const formPageConfig = {
             &lt;input type=&quot;file&quot; id=&quot;file&quot; name=&quot;file&quot;&gt;
         &lt;/div&gt;
         &lt;div class=&quot;form-actions&quot;&gt;
-            &lt;input type=&quot;submit&quot; class=&quot;button positive-btn&quot; value=&quot;Skicka&quot;&gt;
-            &lt;button type=&quot;reset&quot; class=&quot;button neutral-btn&quot;&gt;Rensa&lt;/button&gt;
+            &lt;input type=&quot;submit&quot; class=&quot;button positive&quot; value=&quot;Skicka&quot;&gt;
+            &lt;button type=&quot;reset&quot; class=&quot;button neutral&quot;&gt;Rensa&lt;/button&gt;
         &lt;/div&gt;
     &lt;/fieldset&gt;
 &lt;/form&gt;`
@@ -1160,6 +1189,152 @@ document.addEventListener(&apos;submit&apos;, function(event) {
         }
     ]
 };
+const alertPageConfig = {
+    title: 'Meddelande/Varning',
+    description: 'Meddelande och varningar används när användaren behöver info om vad som skett, så som att ett formulär skickats eller ett fel uppstått.',
+    image: {
+        src: '/imgs/Exempel meddelande.png',
+        alt: 'Bild av ett meddelande efter en användare skickat ett formulär'
+    },
+    codeExamples: [
+        {
+            label: 'HTML: struktur av alert',
+            code: `&lt;div class=&quot;alert info-alert&quot;&gt;
+    &lt;div class=&quot;content-alert&quot;&gt;
+        &lt;h2&gt;Titel!&lt;/h2&gt;
+        &lt;p&gt;Meddelande.&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;button type=&quot;button&quot; class=&quot;button neutral-btn close-alert&quot;&gt;Stäng&lt;/button&gt;
+&lt;/div&gt;
+
+&lt;!-- Interaktiv alert --&gt;
+&lt;div id=&quot;alert-demo&quot;&gt;&lt;/div&gt;
+&lt;button 
+    onclick=&quot;document.getElementById(&apos;alert-demo&apos;).appendChild(createAlert({ 
+        type: &apos;success&apos;, 
+        title: &apos;Dynamisk alert&apos;, 
+        message: &apos;Du tryckte på knappen.&apos; }))&quot;&gt;
+    Visa alert
+&lt;/button&gt;`
+        },
+        {
+            label: 'CSS',
+            code: `/* Alert */
+.alert {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    gap: 1rem;
+    border: 1px solid;
+    border-radius: 1em;
+    padding: 1rem;
+    background-color: white;
+}
+
+.content-alert {
+    flex: 1;
+}
+
+.success-alert {
+    border-color: var(--secondary-color);
+    background-color: var(--secondary-color-transparent);
+}
+
+.error-alert {
+    border-color: var(--negative-color);
+    background-color: var(--negative-color-transparent);
+    color: var(--negative-color-darker);
+}
+
+.info-alert {
+    border-color: var(--neutral-color-darker);
+}
+
+.close-alert {
+    padding: 0.75em 1em;
+}`
+        },
+        {
+            label: 'JavaScript',
+            code: `//Skapa ett alert element
+function createAlert({ type = &apos;info&apos;, title = &apos;Info&apos;, message = &apos;&apos; }) {
+    const alertElement = document.createElement(&apos;div&apos;);
+    alertElement.className = &#96;alert &#36{type}-alert&#96;;
+
+    let btnClass;
+    switch(type){
+        case &apos;error&apos;: btnClass = &apos;negative&apos;;
+            break;
+        case &apos;success&apos;: btnClass = &apos;positive&apos;;
+            break;
+        default: btnClass = &apos;neutral&apos;;
+    }
+
+    alertElement.innerHTML = &#96;
+        &lt;div class=&quot;content-alert&quot;&gt;
+            &lt;h2&gt;&#36;{title}&lt;/h2&gt;
+            &lt;p&gt;&#36;{message}&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;button type=&quot;button&quot; class=&quot;&#36;{btnClass} small close-alert&quot;&gt;Stäng&lt;/button&gt;
+    &#96;;
+
+    return alertElement;
+}`
+        }
+    ],
+    usageHtml: [
+        {
+            title: 'Success',
+            element: `<div class="alert success-alert">
+                <div class="content-alert">
+                    <h2>Skickat!</h2>
+                    <p>Ditt meddelande har blivit skickat. Du hör från oss snart.</p>
+                </div>
+                <button type="button" class="positive small close-alert">Stäng</button>
+            </div>`,
+            description: `<p>Använd den här varianten när något lyckats, till exempel ett skickat formulär eller en sparad ändring.</p>
+            <p>I omringande div inkludera klassen <code>success-alert</code>, och knappen ska ha klassen <code>positive</code>.</p>`
+        },
+        {
+            title: 'Error',
+            element: `<div class="alert error-alert">
+                <div class="content-alert">
+                    <h2>Fel uppstod</h2>
+                    <p>Något gick fel. Försök igen eller kontakta support.</p>
+                </div>
+                <button type="button" class="negative small close-alert">Stäng</button>
+            </div>`,
+            description: `<p>Använd den röda alerten när något behöver åtgärdas, till exempel om ett formulär inte kunde skickas.</p>
+            <p>I omringande div inkludera klassen <code>error-alert</code>, och knappen ska ha klassen <code>negative</code>.</p>`
+        },
+        {
+            title: 'Info',
+            element: `<div class="alert info-alert">
+                <div class="content-alert">
+                    <h2>Info</h2>
+                    <p>Detta är ett informationsmeddelande om sidans status.</p>
+                </div>
+                <button type="button" class="neutral small close-alert">Stäng</button>
+            </div>`,
+            description: `<p>Använd informationsmeddelanden när du vill ge användaren extra kontext.</p>
+            <p>I omringande div inkludera klassen <code>info-alert</code>, och knappen ska ha klassen <code>neutral</code>.</p>`
+        },
+        {
+            title: 'Interaktiv alert',
+            element: `<div id="alert-demo"></div>
+            <button 
+                onclick="document.getElementById('alert-demo').appendChild(createAlert({ 
+                    type: 'success', 
+                    title: 'Dynamisk alert', 
+                    message: 'Du tryckte på knappen.'
+                }))">
+                Visa alert
+            </button>`,
+            description: `<p>Alert-element kan dynamiskt skapas genom JavaScript, till exempel efter formulärskick eller vid validering.</p>
+            <p>Elementet som alerten ska läggas till i ska ha ett id vars namn ska vara i onclick funktionen, i exemplet ovan <code>alert-demo</code>.`
+        }
+    ]
+};
 
 //  ========== Pages ============
 
@@ -1228,6 +1403,10 @@ function getFormPage(){
     return buildPage(formPageConfig);
 }
 
+function getAlertPage(){
+    return buildPage(alertPageConfig);
+}
+
 // ============ Routing ============
 
 const routes = {
@@ -1239,6 +1418,7 @@ const routes = {
     '#/web-components/button': getButtonPage,
     '#/web-components/table': getTablePage,
     '#/web-components/navigation': getMenuPage,
+    '#/web-components/alert': getAlertPage,
     '#/web-components/form': getFormPage
 };
 
@@ -1252,10 +1432,36 @@ function handleRoute() {
 window.addEventListener('hashchange', handleRoute);
 window.addEventListener('load', handleRoute);
 
-// Om man klickar på en code-btn ska man kopiera ovanstående kodtext
+//Skapa ett alert element
+function createAlert({ type = 'info', title = 'Info', message = '' }) {
+    const alertElement = document.createElement('div');
+    alertElement.classList.add =('alert',`${type}-alert`);
+
+    let btnClass;
+    switch(type){
+        case 'error': btnClass = 'negative';
+            break;
+        case 'success': btnClass = 'positive';
+            break;
+        default: btnClass = 'neutral';
+    }
+
+    alertElement.innerHTML = `
+        <div class="content-alert">
+            <h2>${title}</h2>
+            <p>${message}</p>
+        </div>
+        <button type="button" class="${btnClass} small close-alert">Stäng</button>
+    `;
+
+    return alertElement;
+}
+
+// Event deligation
 document.addEventListener('click', function(event) {
     // Kontrollera om det som klickades är en code-btn
     if (event.target.classList.contains('code-btn')) {
+        //Om man klickar på en code-btn ska man kopiera ovanstående kodtext
 
         // Hitta närmaste code-block
         const codeBlock = event.target.closest('.code-block');
@@ -1268,9 +1474,7 @@ document.addEventListener('click', function(event) {
         // Hämta texten
         const codeText = codeElement.textContent;
 
-        if(!codeText){
-            return;
-        }
+        if(!codeText) return;
 
         // Kopiera till clipboard
         navigator.clipboard.writeText(codeText);
@@ -1288,6 +1492,14 @@ document.addEventListener('click', function(event) {
         codeBlock.appendChild(copyConfirmedElement);
         console.log('Kopierad kod:', codeText);
         return;
+    }
+    else if(event.target.classList.contains('close-alert')){
+        console.log("du tröck på en knapp");
+        const alertElement = event.target.closest('.alert');
+
+        if(!alertElement) return;
+
+        alertElement.remove();
     }
 });
 
