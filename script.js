@@ -1069,17 +1069,20 @@ input[type="file"]::file-selector-button{
 }
 
 input[type="file"]::file-selector-button,
-.function-btn{
-    font-size: small;
+button.function-action{
     padding: 0em 1em;
     border-radius: 0;
 }
 
-.neutral-btn{
+button.neutral{
     background-color: var(--neutral-color);
     color: var(--text-color-dark);
-    font-size: small;
     border: solid 2px var(--neutral-color-darker);
+}
+
+button.small{
+    font-size: small;
+    padding: 0.5rem 1rem;
 }
 
 button:hover, 
@@ -1092,17 +1095,17 @@ button:focus,
     transition: background 0.2s ease;
 }
 
-.neutral-btn:hover,
-.neutral-btn:focus-within{
+button.neutral:hover,
+button.neutral:focus-within{
     background-color: var(--neutral-color-darker);
 }`
         },
         {
             label:`JavaScript`,
             code:`//Byt ut formuläret mot ett meddelande
-document.addEventListener(&apos;submit&apos;, function(event) {
+document.addEventListener('submit', function(event) {
     // Om det inte är ett formulär, gör ingenting
-    if (!event.target.matches(&apos;form&apos;)) return;
+    if (!event.target.matches('form')) return;
     
     //Laddar inte om sidan
     event.preventDefault(); 
@@ -1110,13 +1113,14 @@ document.addEventListener(&apos;submit&apos;, function(event) {
     const form = event.target;
 
     //Om det inte finns data-success-title eller data-success-message används default
-    const successTitle = form.dataset.successTitle || &apos;Tack!&apos;;
-    const successMessage = form.dataset.successMessage || &apos;Formuläret har skickats.&apos;;
+    const successTitle = form.dataset.successTitle || 'Tack!';
+    const successMessage = form.dataset.successMessage || 'Formuläret har skickats.';
 
-    const successElement= document.createElement(&apos;div&apos;);
-    successElement.className = &apos;form-success&apos;;
-    successElement.innerHTML = &#96;&lt;h2&gt;&#36;{successTitle}&lt;/h2&gt;
-        &lt;p&gt;&#36;{successMessage}&lt;/p&gt;&#96;;
+    const successElement = createAlert({
+        type:'success',
+        title: successTitle,
+        message:successMessage
+     })
 
     form.replaceWith(successElement);
 });`
@@ -1167,8 +1171,8 @@ document.addEventListener(&apos;submit&apos;, function(event) {
                             <input type="file" id="file" name="file">
                         </div>
                         <div class="form-actions">
-                            <input type="submit" class="button positive-btn" value="Skicka">
-                            <button type="reset" class="button neutral-btn">Rensa</button>
+                            <input type="submit" class="button positive" value="Skicka">
+                            <button type="reset" class="button neutral">Rensa</button>
                         </div>
                     </fieldset>
                 </form>`,
@@ -1435,7 +1439,7 @@ window.addEventListener('load', handleRoute);
 //Skapa ett alert element
 function createAlert({ type = 'info', title = 'Info', message = '' }) {
     const alertElement = document.createElement('div');
-    alertElement.classList.add =('alert',`${type}-alert`);
+    alertElement.classList.add('alert',`${type}-alert`);
 
     let btnClass;
     switch(type){
@@ -1517,10 +1521,11 @@ document.addEventListener('submit', function(event) {
     const successTitle = form.dataset.successTitle || 'Tack!';
     const successMessage = form.dataset.successMessage || 'Formuläret har skickats.';
 
-    const successElement= document.createElement('div');
-    successElement.className = 'form-success';
-    successElement.innerHTML = `<h2>${successTitle}</h2>
-        <p>${successMessage}</p>`;
+    const successElement = createAlert({
+        type:'success',
+        title: successTitle,
+        message:successMessage
+     })
 
     form.replaceWith(successElement);
 });

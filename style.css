@@ -204,7 +204,7 @@ table {
 
 /* Wrapper for horizontal scrolling */
 .table-wrapper {
-    overflow-x: scroll;
+    overflow-x: auto;
 }
 
 /* Header */
@@ -447,9 +447,12 @@ form textarea:focus {
     align-items: start;
     justify-content: space-between;
     gap: 1rem;
-    border: 1px solid;
+
+    border: 2px solid;
     border-radius: 1em;
+
     padding: 1rem;
+    margin: 1rem 0;
     background-color: white;
 }
 
