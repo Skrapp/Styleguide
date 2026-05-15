@@ -885,7 +885,7 @@ const formPageConfig = {
     codeExamples: [
         {
             label: 'HTML: struktur av formulär',
-            code: `&lt;form action=&quot;url&quot;&gt;
+            code: `&lt;form action=&quot;url&quot;data-success-title="Valfri titel" data-success-message="Valfritt meddelande"&gt;
     &lt;fieldset&gt;
         &lt;legend&gt; Kontakta oss &lt;/legend&gt;
         &lt;div class=&quot;form-row&quot;&gt;
@@ -1067,10 +1067,98 @@ button:focus,
 .neutral-btn:focus-within{
     background-color: var(--neutral-color-darker);
 }`
+        },
+        {
+            label:`JavaScript`,
+            code:`//Byt ut formuläret mot ett meddelande
+document.addEventListener(&apos;submit&apos;, function(event) {
+    // Om det inte är ett formulär, gör ingenting
+    if (!event.target.matches(&apos;form&apos;)) return;
+    
+    //Laddar inte om sidan
+    event.preventDefault(); 
+
+    const form = event.target;
+
+    //Om det inte finns data-success-title eller data-success-message används default
+    const successTitle = form.dataset.successTitle || &apos;Tack!&apos;;
+    const successMessage = form.dataset.successMessage || &apos;Formuläret har skickats.&apos;;
+
+    const successElement= document.createElement(&apos;div&apos;);
+    successElement.className = &apos;form-success&apos;;
+    successElement.innerHTML = &#96;&lt;h2&gt;&#36;{successTitle}&lt;/h2&gt;
+        &lt;p&gt;&#36;{successMessage}&lt;/p&gt;&#96;;
+
+    form.replaceWith(successElement);
+});`
         }
     ],
-    usageHtml: `
-        `
+    usageHtml: [
+        {
+            title:`Generellt`,
+            element:`<form data-success-title="Tack för att du kontaktar oss!" data-success-message="Vi har tagit emot ditt mail, en kopia av det som skickats skickas även till din mail.">
+                    <fieldset>
+                        <legend> Kontakta oss </legend>
+                        <div class="form-row">
+                            <label for="name">Namn</label>
+                            <input type="text" id="name" name="name" placeholder="Namn" required>
+                        </div>
+                        <div class="form-row">
+                            <label for="email">E-post</label>
+                            <input type="email" id="email" name="email" placeholder="namn@exempel.se" required>
+                        </div>
+                        <div class="form-row">
+                            <label for="topic">Ämne</label>
+                            <select id="topic" name="topic">
+                                <option value="">Välj ett ämne</option>
+                                <option value="support">Support</option>
+                                <option value="feedback">Feedback</option>
+                                <option value="collaboration">Samarbete</option>
+                            </select>
+                        </div>
+                        <div class="form-row">
+                            <label>Prioritet</label>
+                            <div class="radio-group">
+                                <label><input type="radio" name="priority" value="low"> Låg</label>
+                                <label><input type="radio" name="priority" value="normal"> Normal</label>
+                                <label><input type="radio" name="priority" value="high"> Hög</label>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <label>Nyhetsbrev</label>
+                            <div class="checkbox-group">
+                                <label><input type="checkbox" id="newsletter" name="newsletter"> Ja tack, skicka nyheter</label>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <label for="message">Meddelande</label>
+                            <textarea id="message" name="message" rows="5" placeholder="Skriv ditt meddelande här..." required></textarea>                        </div>
+                        <div class="form-row">
+                            <label for="file">Bilaga</label>
+                            <input type="file" id="file" name="file">
+                        </div>
+                        <div class="form-actions">
+                            <input type="submit" class="button positive-btn" value="Skicka">
+                            <button type="reset" class="button neutral-btn">Rensa</button>
+                        </div>
+                    </fieldset>
+                </form>`,
+            description: `<p>Bygg upp formuläret enligt vilka element som behövs. Följ strukturen som visas ovan.</p>
+
+            <p>Varje svarsrad ska vara inbäddade i en <code>div class="form-row"</code>.</p>
+            
+            <p>Varje grupp av radioknappar eller checkboxar ska vara inbäddare i en <code>div class="radio-group"</code> respektive <code>div class="checkbox-group"</code>.</p>
+            
+            <p>Aktionsknappar så som "Skicka" eller "Rensa" ska vara placerade längst ner och vara inbäddade i en <code>div class="form-action-btns"</code>.</p>
+            
+            <p>När "Submit" knappen aktiveras byts formuläret ut av ett meddelande. Om inget annat nämns är meddelandet Titel:"Tack" Meddelande:"Formuläret har skickats.". 
+            Detta kan förändras genom att i <code>form</code> elementet inkludera <code>data-success-title="Valfri titel" data-success-message="Valfritt meddelande"</code>.</p>
+            
+            <p>Det är viktigt att både <code>label</code> och <code>placeholder</code> är tydliga och förklarar för användaren vad som förväntas.</p>
+            
+            <p>Kom ihåg att inkludera <code>required</code> om fältet är obligatoriskt.</p>`        
+        }
+    ]
 };
 
 //  ========== Pages ============
@@ -1136,6 +1224,10 @@ function getColorSchemePage(){
     return buildPage(colorSchemePageConfig);
 }
 
+function getFormPage(){
+    return buildPage(formPageConfig);
+}
+
 // ============ Routing ============
 
 const routes = {
@@ -1146,7 +1238,8 @@ const routes = {
     '#/design-guidelines/logo': getLogoPage,
     '#/web-components/button': getButtonPage,
     '#/web-components/table': getTablePage,
-    '#/web-components/navigation': getMenuPage
+    '#/web-components/navigation': getMenuPage,
+    '#/web-components/form': getFormPage
 };
 
 function handleRoute() {
@@ -1176,7 +1269,7 @@ document.addEventListener('click', function(event) {
         const codeText = codeElement.textContent;
 
         if(!codeText){
-
+            return;
         }
 
         // Kopiera till clipboard
@@ -1194,6 +1287,29 @@ document.addEventListener('click', function(event) {
         copyConfirmedElement.innerText = `Kod kopierad`;
         codeBlock.appendChild(copyConfirmedElement);
         console.log('Kopierad kod:', codeText);
+        return;
     }
+});
+
+//Byt ut formuläret mot ett meddelande
+document.addEventListener('submit', function(event) {
+    // Om det inte är ett formulär, gör ingenting
+    if (!event.target.matches('form')) return;
+    
+    //Laddar inte om sidan
+    event.preventDefault(); 
+
+    const form = event.target;
+
+    //Om det inte finns data-success-title eller data-success-message används default
+    const successTitle = form.dataset.successTitle || 'Tack!';
+    const successMessage = form.dataset.successMessage || 'Formuläret har skickats.';
+
+    const successElement= document.createElement('div');
+    successElement.className = 'form-success';
+    successElement.innerHTML = `<h2>${successTitle}</h2>
+        <p>${successMessage}</p>`;
+
+    form.replaceWith(successElement);
 });
 
