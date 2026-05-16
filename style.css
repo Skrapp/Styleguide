@@ -49,13 +49,10 @@ body{
 }
 
 main{
-    max-width: 1000px;
+    max-width: 2000px;
     
-    width: 90%;
     margin: 0 auto;
-
-    padding: 1em;
-    margin: 0 auto;
+    padding: 5%;
 }
 
 footer{
@@ -70,6 +67,54 @@ header{
     top: 0;
     width: 100%;
     z-index: 20;
+}
+
+/* Loader based on https://css-loaders.com/dancers/*/
+.loader-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1em 1em 0em;
+    gap: 0.5em;
+    width: fit-content;
+}
+.loader {
+  width: 3em;
+  aspect-ratio: 1;
+  position: relative;
+    background-color: white;
+    border-radius: 0.5em;
+  /* margin: auto; */
+}
+.loader:before,
+.loader:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: -0.5em 0 0 -0.5em;
+  width: 1em;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--primary-color);
+  animation:
+    l1-1 2s  infinite,
+    l1-2 .5s infinite;
+}
+.loader:after {
+  background: var(--secondary-color);
+  animation-delay: -1s,0s;
+}
+@keyframes l1-1 {
+  0%   {top:0   ;left:0}
+  25%  {top:100%;left:0}
+  50%  {top:100%;left:100%}
+  75%  {top:0   ;left:100%}
+  100% {top:0   ;left:0}
+}
+@keyframes l1-2 {
+   80%,100% {transform: rotate(0.5turn)}
 }
 
 /*Navigation menu*/
@@ -156,6 +201,13 @@ nav a:focus-within {
 .flex-container{
     display: flex;
     flex-direction: column;
+    flex-wrap: wrap;
+    gap: 1em;
+}
+
+.flex-container-row{
+    display: flex;
+    flex-direction: row;
     flex-wrap: wrap;
     gap: 1em;
 }
@@ -443,6 +495,7 @@ form textarea:focus {
 
 /* Alert */
 .alert {
+    max-width: fit-content;
     display: flex;
     align-items: start;
     justify-content: space-between;
@@ -452,7 +505,6 @@ form textarea:focus {
     border-radius: 1em;
 
     padding: 1rem;
-    margin: 1rem 0;
     background-color: white;
 }
 

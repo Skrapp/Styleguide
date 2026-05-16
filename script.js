@@ -1193,6 +1193,7 @@ document.addEventListener('submit', function(event) {
         }
     ]
 };
+
 const alertPageConfig = {
     title: 'Meddelande/Varning',
     description: 'Meddelande och varningar används när användaren behöver info om vad som skett, så som att ett formulär skickats eller ett fel uppstått.',
@@ -1297,6 +1298,7 @@ function createAlert({ type = &apos;info&apos;, title = &apos;Info&apos;, messag
                 <button type="button" class="positive small close-alert">Stäng</button>
             </div>`,
             description: `<p>Använd den här varianten när något lyckats, till exempel ett skickat formulär eller en sparad ändring.</p>
+            
             <p>I omringande div inkludera klassen <code>success-alert</code>, och knappen ska ha klassen <code>positive</code>.</p>`
         },
         {
@@ -1309,6 +1311,7 @@ function createAlert({ type = &apos;info&apos;, title = &apos;Info&apos;, messag
                 <button type="button" class="negative small close-alert">Stäng</button>
             </div>`,
             description: `<p>Använd den röda alerten när något behöver åtgärdas, till exempel om ett formulär inte kunde skickas.</p>
+            
             <p>I omringande div inkludera klassen <code>error-alert</code>, och knappen ska ha klassen <code>negative</code>.</p>`
         },
         {
@@ -1321,6 +1324,7 @@ function createAlert({ type = &apos;info&apos;, title = &apos;Info&apos;, messag
                 <button type="button" class="neutral small close-alert">Stäng</button>
             </div>`,
             description: `<p>Använd informationsmeddelanden när du vill ge användaren extra kontext.</p>
+            
             <p>I omringande div inkludera klassen <code>info-alert</code>, och knappen ska ha klassen <code>neutral</code>.</p>`
         },
         {
@@ -1335,7 +1339,134 @@ function createAlert({ type = &apos;info&apos;, title = &apos;Info&apos;, messag
                 Visa alert
             </button>`,
             description: `<p>Alert-element kan dynamiskt skapas genom JavaScript, till exempel efter formulärskick eller vid validering.</p>
+            
             <p>Elementet som alerten ska läggas till i ska ha ett id vars namn ska vara i onclick funktionen, i exemplet ovan <code>alert-demo</code>.`
+        }
+    ]
+};
+
+const panelPageConfig = {
+    title: 'Meddelande/Varning',
+    description: 'Meddelande och varningar används när användaren behöver info om vad som skett, så som att ett formulär skickats eller ett fel uppstått.',
+    image: {
+        src: '/imgs/Exempel meddelande.png',
+        alt: 'Bild av ett meddelande efter en användare skickat ett formulär'
+    },
+    codeExamples: [
+        {
+            label: 'HTML: struktur av panel',
+            code: ``
+        },
+        {
+            label: 'CSS',
+            code: ``
+        },
+        {
+            label: 'JavaScript',
+            code: ``
+        }
+    ],
+    usageHtml: [
+        {
+            title: 'Success',
+            element: `<div class="alert success-alert">
+                <div class="content-alert">
+                    <h2>Skickat!</h2>
+                    <p>Ditt meddelande har blivit skickat. Du hör från oss snart.</p>
+                </div>
+                <button type="button" class="positive small close-alert">Stäng</button>
+            </div>`,
+            description: `<p>Använd den här varianten när något lyckats, till exempel ett skickat formulär eller en sparad ändring.</p>
+            
+            <p>I omringande div inkludera klassen <code>success-alert</code>, och knappen ska ha klassen <code>positive</code>.</p>`
+        }
+    ]
+};
+
+const loadingPageConfig = {
+    title: 'Laddning',
+    description: 'Medan användaren väntar på att en sida ska ladda eller en åtgärd ska slutföras kan en laddare användas för att visa att något händer i bakgrunden.',
+    image: {
+        src: '/imgs/Exempel laddning.png',
+        alt: 'Bild av hur laddning ser ut, två cirklar som roterar runt i en kvadratisk bana med texten "Laddar..." under'
+    },
+    codeExamples: [
+        {
+            label: 'HTML: struktur av laddningsindikator',
+            code: `&lt;div class=&quot;loader-container&quot;&gt;
+    &lt;div class=&quot;loader&quot;&gt;&lt;/div&gt;
+    &lt;p&gt;Laddar...&lt;/p&gt;
+&lt;/div&gt;`
+        },
+        {
+            label: 'CSS',
+            code: `/* Loader, based on https://css-loaders.com/dancers/*/
+.loader-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1em 1em 0em;
+    gap: 0.5em;
+    width: fit-content;
+}
+
+.loader {
+  width: 3em;
+  aspect-ratio: 1;
+  position: relative;
+    background-color: white;
+    border-radius: 0.5em;
+  /* margin: auto; */
+}
+
+.loader:before,
+.loader:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: -0.5em 0 0 -0.5em;
+  width: 1em;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--primary-color);
+  animation:
+    l1-1 2s  infinite,
+    l1-2 .5s infinite;
+}
+
+.loader:after {
+  background: var(--secondary-color);
+  animation-delay: -1s,0s;
+}
+
+@keyframes l1-1 {
+  0%   {top:0   ;left:0}
+  25%  {top:100%;left:0}
+  50%  {top:100%;left:100%}
+  75%  {top:0   ;left:100%}
+  100% {top:0   ;left:0}
+}
+
+@keyframes l1-2 {
+   80%,100% {transform: rotate(0.5turn)}
+}`
+        }
+    ],
+    usageHtml: [
+        {
+            title: 'Laddningsindikator',
+            element: `<div class="loader-container">
+                <div class="loader"></div>
+                <p>Laddar...</p>
+            </div>`,
+            description:`<p>För att indikera att något laddas eller en åtgärd pågår kan en loader visas. Den är centrerad i det område där innehållet kommer att visas.</p>
+            
+            <p>För att skapa en loader, inkludera en div med klassen <code>loader</code>.</p>
+
+            <p>Inkludera även en text "Laddar..." eller en annan beskrivande text för att tydliggöra för användare att något laddas. 
+            Lägg då både loader och text i en div med klassen <code>loader-container</code>.</p>`
         }
     ]
 };
@@ -1411,6 +1542,14 @@ function getAlertPage(){
     return buildPage(alertPageConfig);
 }
 
+function getLoadingPage(){
+    return buildPage(loadingPageConfig);
+}
+
+function getPanelPage(){
+    return buildPage(panelPageConfig);
+}
+
 // ============ Routing ============
 
 const routes = {
@@ -1423,6 +1562,8 @@ const routes = {
     '#/web-components/table': getTablePage,
     '#/web-components/navigation': getMenuPage,
     '#/web-components/alert': getAlertPage,
+    '#/web-components/loading': getLoadingPage,
+    '#/web-components/panel': getPanelPage,
     '#/web-components/form': getFormPage
 };
 
