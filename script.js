@@ -1284,7 +1284,19 @@ function createAlert({ type = &apos;info&apos;, title = &apos;Info&apos;, messag
     &#96;;
 
     return alertElement;
-}`
+}
+    
+// Event deligation
+document.addEventListener('click', function(event) {
+    //If clicked element is a close-alert, then remove the alert
+    if(event.target.classList.contains('close-alert')){
+        const alertElement = event.target.closest('.alert');
+
+        if(!alertElement) return;
+
+        alertElement.remove();
+    }
+});`
         }
     ],
     usageHtml: [
@@ -1356,33 +1368,72 @@ const panelPageConfig = {
         {
             label: 'HTML: struktur av panel',
             code: `/* Panel med endast text */
-<div class="panel primary text-panel">
-    <div class="panel-content">
+&lt;div class=&quot;panel text-panel&quot;&gt;
+    &lt;div class=&quot;panel-content&quot;&gt;
         /* Innehåll i panel */
-    </div>
-</div>
+    &lt;/div&gt;
+&lt;/div&gt;
 
 /* Panel med bild */
-<div class="panel primary image-panel">
-    <img src="bild.jpg" alt="Beskrivning av bilden">
-    <div class="panel-content">
+&lt;div class=&quot;panel image-panel style=&quot;background-color: eventuell bakgrundsfärg;&quot;&gt;
+    &lt;img src=&quot;bild.jpg&quot; alt=&quot;Beskrivning av bilden&quot;&gt;
+    &lt;div class=&quot;panel-content&quot;&gt;
         /* Innehåll i panel */
-    </div>
-</div>`
+    &lt;/div&gt;
+&lt;/div&gt;`
         },
         {
             label: 'CSS',
-            code: ``
-        },
-        {
-            label: 'JavaScript',
-            code: ``
+            code: `/* Panel */
+.panel,
+.text-panel,
+.image-panel{
+    min-width: 300px;
+    padding: 2rem;
+    border-radius: 3rem;
+    display: flex;
+    flex-flow: column wrap;
+}
+
+.image-panel{
+    padding: 0;
+    overflow: hidden;
+    border-radius: 7rem 7rem 0.5rem 0.5rem;
+}
+
+.image-panel img{
+    max-height: 200px;
+    object-fit: cover;
+}
+
+.image-panel .panel-content{
+    padding: 2rem;
+    text-align: center;
+}
+    
+.panel-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.panel-grid .image-panel{
+    min-width: 0;
+    background-color: var(--neutral-color);
+    box-shadow: 0 18px 36px rgba(0,0,0,0.08);
+}
+
+.panel-grid .image-panel .panel-content{
+    text-align: left;
+}`
         }
     ],
     usageHtml: [
         {
             title: 'Panel med endast text',
-            element: `<div class="panel text-panel style="background-color: var(--secondary-color);">
+            element: `<div class="flex-container-equal-children">
+                <div class="panel text-panel">
                     <div class="panel-content">
                         <h2>En viktig titel</h2>
                         <p>Och en viktig text. Texten beskriver roliga ting kring något som är passande. Texten kan
@@ -1390,33 +1441,87 @@ const panelPageConfig = {
                          att klicka sig vidare.</p>
                         <button class="button">Här är knappen</button>
                     </div>
-                </div>`,
+                </div>
+                <div class="panel text-panel" style="background-color: var(--secondary-color);">
+                    <div class="panel-content">
+                        <h2>En till viktig titel</h2>
+                        <p>Man kan även ha en bakgrund för att få mer uppmärksamhet.</p>
+                    </div>
+                </div>
+                <div class="panel text-panel" style="background-color: var(--accent-color); color:var(--text-color-light);">
+                    <div class="panel-content">
+                        <h2>En till viktig titel</h2>
+                        <p>Vid mörka bakgrunder ska textfärgen också ändras.</p>
+                        <button class="button">Här är knappen</button>
+                    </div>
+                </div>
+            </div>`,
             description: `<p>En panel används gör att grupper sektioner, kan vara för att dela in 
             information i mindre block för att göra det mer läsbart eller definer ett call-to-action block.</p>
 
             <p>Standard har panelen ingen bakgrundsfärg, men den kan läggas till genom att inkludera en inline style, 
-            t.ex. <code>style="background-color: var(--secondary-color);"</code>.</p>
+            t.ex. <code>style="background-color: var(--secondary-color);"</code>, använd främst primary-color, 
+            secondary-color, accent-color och neutral-color.</p>
             
             <p>Denna panel använder en div med klasserna <code>panel</code> och <code>text-panel</code>. 
             Inuti denna så finns ytterligare en div med klassen <code>panel-content</code>, i den ligger innehållet.</p>
             
-            <p>Vill man ha flera paneler på samma rad kan man med fördel använda flexbox på föräldercontainern.</p>`
+            <p>Vill man ha flera paneler på samma rad kan man med fördel använda  
+            flex container på föräldercontainern.</p>`
         },
         {
             title: 'Panel med bild',
             element: `<div class="panel image-panel" style="background-color: var(--primary-color);">
-                    <img src="/imgs/ahmad-odeh-unsplash.png" alt="Konstnärlig bild av flera personer som dansar">
+                    <img src="/imgs/SFI rollspel.jpg" alt="Konstnärlig bild av flera personer som dansar" style="object-position: 50% 20%">
                     <div class="panel-content">
-                        <h2>Denna panel har en bild som bakgrund, och det är väldigt bra!</h2>
-                        <button class="button positive">Klicka här</button>
+                        <h2>Denna panel har en bild, och det är väldigt bra!</h2>
+                        <button class="button dark">Klicka här</button>
                     </div>
                 </div>`,
             description: `<p>En panel med bild används för att ge en viss visuell effekt eller för att 
             belysa specifikt innehåll. Passande för call to actions eller kortare inforrmationstexter.</p>
             
             <p>Denna panel använder en div med klasserna <code>panel</code> och <code>image-panel</code>. 
-            Inuti denna så finns ytterligare en div med klassen <code>panel-content</code>, i den ligger 
+            Inuti denna så finns bilden och ytterligare en div med klassen <code>panel-content</code>, i den ligger 
             innehållet som hamnar under bilden.</p>`
+        },
+        {
+            title: 'Rutnät av paneler',
+            element: `<div class="panel-grid">
+                <div class="panel text-panel" style="background-color: var(--neutral-color);">
+                    <div class="panel-content">
+                        <h2>Kreativitet i drama</h2>
+                        <p>Dramaövningar hjälper deltagare att utveckla kreativitet, spontanitet och 
+                        samarbetsförmåga.</p>
+                        <button class="button dark">Läs mer</button>
+                    </div>
+                </div>
+                <div class="panel text-panel" style="background-color: var(--neutral-color);">
+                    <div class="panel-content">
+                        <h2>Kommunikation genom kroppspråk</h2>
+                        <p>I dramapedagogik är kroppsspråk, röst och närvaro centrala verktyg.</p>
+                        <button class="button dark">Läs mer</button>
+                    </div>
+                </div>
+                <div class="panel text-panel" style="background-color: var(--neutral-color);">
+                    <div class="panel-content">
+                        <h2>Trygghet i gruppen</h2>
+                        <p>En trygg gruppmiljö är grunden för kreativt arbete.</p>
+                        <button class="button dark">Läs mer</button>
+                    </div>
+                </div>
+                <div class="panel text-panel" style="background-color: var(--neutral-color);">
+                    <div class="panel-content">
+                        <h2>Reflektion i lärande</h2>
+                        <p>Samtal om upplevelser, känslor och samarbete hjälper deltagarna att koppla det 
+                        praktiska arbetet till lärande</p>
+                        <button class="button dark">Läs mer</button>
+                    </div>
+                </div>
+            </div>`,
+            description: `<p>En rutnätsstruktur används när flera paneler ska listas.</p>
+
+            <p>Använd klassen <code>panel-grid</code> på förälder elementet och lägg panelerna inuti.</code> `
         }
     ]
 };
@@ -1511,15 +1616,121 @@ const loadingPageConfig = {
 
 //  ========== Pages ============
 
+const designGuidelinesPages = [
+    {
+        title: 'Logga',
+        href: 'design-guidelines/logo',
+        image: '/imgs/Logga RAD.png',
+        alt: 'Logotyp för RAD',
+        description: 'Regler för hur RAD:s logotyp används, vilka varianter som är tillåtna och när de ska användas.'
+    },
+    {
+        title: 'Färgschema',
+        href: 'design-guidelines/color-scheme',
+        image: '/imgs/färgschema.png',
+        alt: 'Färgschema för RAD',
+        description: 'Primära och sekundära färger i RAD:s visuella identitet och hur de kombineras.'
+    },
+    {
+        title: 'Rubriker och text',
+        href: 'design-guidelines/text',
+        image: '/imgs/Exempel text.png',
+        alt: 'Exempel på text och typografi',
+        description: 'Typografi, rubrikstruktur och textstil för sidans innehåll och kommunikation.'
+    }
+];
+
+const webComponentsPages = [
+    {
+        title: 'Knappar',
+        href: 'web-components/button',
+        image: 'imgs/exempel knappar.png',
+        alt: 'Exempel på knappstilar',
+        description: 'Olika knapptyper som används i RAD:s gränssnitt, från primära CTA till sekundära val.'
+    },
+    {
+        title: 'Tabeller',
+        href: 'web-components/table',
+        image: 'imgs/exempel tabell.png',
+        alt: 'Exempel på tabeller',
+        description: 'Tabellkomponenter för att visa data med tydlig struktur och läsbarhet.'
+    },
+    {
+        title: 'Menyer',
+        href: 'web-components/navigation',
+        image: 'imgs/exempel meny.png',
+        alt: 'Exempel på menyer',
+        description: 'Navigationsmönster och menyer för att guida användaren genom sajten.'
+    },
+    {
+        title: 'Meddelande/Varning',
+        href: 'web-components/alert',
+        image: 'imgs/Exempel meddelande.png',
+        alt: 'Exempel på meddelanden och varningar',
+        description: 'Meddelande- och varningselement som används för utskick och viktig feedback.'
+    },
+    {
+        title: 'Laddning',
+        href: 'web-components/loading',
+        image: 'imgs/Exempel laddning.png',
+        alt: 'Laddningsindikator',
+        description: 'Komponenter som visar att innehåll eller åtgärder laddas.'
+    },
+    {
+        title: 'Paneler',
+        href: 'web-components/panel',
+        image: 'imgs/Logga RAD ruta.png',
+        alt: 'Exempel på paneler',
+        description: 'Panelkomponenter som används för att presentera innehåll i kort och strukturerade block.'
+    },
+    {
+        title: 'Formulär',
+        href: 'web-components/form',
+        image: 'imgs/Exempel Formulär.png',
+        alt: 'Exempel på formulär',
+        description: 'Formulärkomponenter och fältstilar för användarinmatning.'
+    }
+];
+
+function renderOverviewPage(title, intro, pages) {
+    let html = `<h1>${title}</h1>`;
+    html += `<p>${intro}</p>`;
+    html += `<div class="panel-grid">`;
+
+    pages.forEach(page => {
+        html += `<article class="image-panel">
+            <img src="${page.image}" alt="${page.alt}">
+            <div class="panel-content">
+                <h2>${page.title}</h2>
+                <p>${page.description}</p>
+                <a href="#/${page.href}"><button class="button">Öppna sidan</button></a>
+            </div>
+        </article>`;
+    });
+
+    html += `</div>`;
+    return html;
+}
+
 function getHomePage(){
-    return `<h1>Welcome home</h1>
-    <h2>subtitel</h2>
-    <p>homepage</p>`;
+    return `<h1>Designguide RAD</h1>
+    <p>Välkommen till RAD:s designguide. Använd menyn för att hitta riktlinjer eller webbkomponenter.</p>`;
+}
+
+function getDesignGuidelinesPage(){
+    return renderOverviewPage(
+        'Designriktlinjer',
+        'Här hittar du alla undersidor för RAD:s visuella riktlinjer och grafiska profil.',
+        designGuidelinesPages
+    );
 }
 
 function getWebComponentsPage(){
-    return `<h1>Welcome to webcomponents</h1>
-    <p>webcomponents</p>`;
+    return renderOverviewPage(
+        'Webb komponenter',
+        'Utforska alla komponenter som används i RAD:s webbgränssnitt.',
+        webComponentsPages
+    );
 }
 
 function getLogoPage(){
@@ -1592,6 +1803,7 @@ function getPanelPage(){
 
 const routes = {
     '#/': getHomePage,
+    '#/design-guidelines': getDesignGuidelinesPage,
     '#/web-components': getWebComponentsPage,
     '#/design-guidelines/text': getTextPage,
     '#/design-guidelines/color-scheme': getColorSchemePage,
