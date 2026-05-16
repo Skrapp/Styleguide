@@ -1119,7 +1119,7 @@ document.addEventListener('submit', function(event) {
     const successElement = createAlert({
         type:'success',
         title: successTitle,
-        message:successMessage
+        message: successMessage
      })
 
     form.replaceWith(successElement);
@@ -1346,16 +1346,29 @@ function createAlert({ type = &apos;info&apos;, title = &apos;Info&apos;, messag
 };
 
 const panelPageConfig = {
-    title: 'Meddelande/Varning',
-    description: 'Meddelande och varningar används när användaren behöver info om vad som skett, så som att ett formulär skickats eller ett fel uppstått.',
+    title: 'Paneler',
+    description: 'Paneler används för att gruppera sektioner i tydliga block, t.ex. meddelanden eller som bakgrund för innehåll.',
     image: {
-        src: '/imgs/Exempel meddelande.png',
-        alt: 'Bild av ett meddelande efter en användare skickat ett formulär'
+        src: '/imgs/Exempel panel.png',
+        alt: 'Bild av två olika paneler'
     },
     codeExamples: [
         {
             label: 'HTML: struktur av panel',
-            code: ``
+            code: `/* Panel med endast text */
+<div class="panel primary text-panel">
+    <div class="panel-content">
+        /* Innehåll i panel */
+    </div>
+</div>
+
+/* Panel med bild */
+<div class="panel primary image-panel">
+    <img src="bild.jpg" alt="Beskrivning av bilden">
+    <div class="panel-content">
+        /* Innehåll i panel */
+    </div>
+</div>`
         },
         {
             label: 'CSS',
@@ -1368,17 +1381,42 @@ const panelPageConfig = {
     ],
     usageHtml: [
         {
-            title: 'Success',
-            element: `<div class="alert success-alert">
-                <div class="content-alert">
-                    <h2>Skickat!</h2>
-                    <p>Ditt meddelande har blivit skickat. Du hör från oss snart.</p>
-                </div>
-                <button type="button" class="positive small close-alert">Stäng</button>
-            </div>`,
-            description: `<p>Använd den här varianten när något lyckats, till exempel ett skickat formulär eller en sparad ändring.</p>
+            title: 'Panel med endast text',
+            element: `<div class="panel text-panel style="background-color: var(--secondary-color);">
+                    <div class="panel-content">
+                        <h2>En viktig titel</h2>
+                        <p>Och en viktig text. Texten beskriver roliga ting kring något som är passande. Texten kan
+                         ge info eller vara en call to action för att ge användaren anledninga 
+                         att klicka sig vidare.</p>
+                        <button class="button">Här är knappen</button>
+                    </div>
+                </div>`,
+            description: `<p>En panel används gör att grupper sektioner, kan vara för att dela in 
+            information i mindre block för att göra det mer läsbart eller definer ett call-to-action block.</p>
+
+            <p>Standard har panelen ingen bakgrundsfärg, men den kan läggas till genom att inkludera en inline style, 
+            t.ex. <code>style="background-color: var(--secondary-color);"</code>.</p>
             
-            <p>I omringande div inkludera klassen <code>success-alert</code>, och knappen ska ha klassen <code>positive</code>.</p>`
+            <p>Denna panel använder en div med klasserna <code>panel</code> och <code>text-panel</code>. 
+            Inuti denna så finns ytterligare en div med klassen <code>panel-content</code>, i den ligger innehållet.</p>
+            
+            <p>Vill man ha flera paneler på samma rad kan man med fördel använda flexbox på föräldercontainern.</p>`
+        },
+        {
+            title: 'Panel med bild',
+            element: `<div class="panel image-panel" style="background-color: var(--primary-color);">
+                    <img src="/imgs/ahmad-odeh-unsplash.png" alt="Konstnärlig bild av flera personer som dansar">
+                    <div class="panel-content">
+                        <h2>Denna panel har en bild som bakgrund, och det är väldigt bra!</h2>
+                        <button class="button positive">Klicka här</button>
+                    </div>
+                </div>`,
+            description: `<p>En panel med bild används för att ge en viss visuell effekt eller för att 
+            belysa specifikt innehåll. Passande för call to actions eller kortare inforrmationstexter.</p>
+            
+            <p>Denna panel använder en div med klasserna <code>panel</code> och <code>image-panel</code>. 
+            Inuti denna så finns ytterligare en div med klassen <code>panel-content</code>, i den ligger 
+            innehållet som hamnar under bilden.</p>`
         }
     ]
 };
@@ -1487,12 +1525,12 @@ function getWebComponentsPage(){
 function getLogoPage(){
     return `<h1>Loggor</h1>    
         <p>Riksorganisationen Auktoriserade Dramapedagoger (RAD) har en logga som används i all media. Främst ska den runda loggan användas men om den ska användas i mindre än 80px i höjd ska någon av de mindre loggorna användas.</p>
-        <div class="flex-container">
+        <div class="logos-container">
             <div>
                 <img src="/imgs/Logga RAD.png" alt="Logga för Riksorganisationen Auktoriserade Dramapedagoger" height="400">
                 <br>
                 <a href="/imgs/Logga RAD.png" download="Logga RAD">
-                    <button class="function-btn">Ladda ner <i class="bi bi-download"></i></button>
+                    <button class="function">Ladda ner <i class="bi bi-download"></i></button>
                 </a>
             </div>
 
@@ -1500,7 +1538,7 @@ function getLogoPage(){
                 <img src="/imgs/Logga RAD mindre.png" alt="Mindre logga för Riksorganisationen Auktoriserade Dramapedagoger" height="80">
                 <br>
                 <a href="/imgs/Logga RAD mindre.png" download="Logga RAD mindre">
-                    <button class="function-btn">Ladda ner <i class="bi bi-download"></i></button>
+                    <button class="function">Ladda ner <i class="bi bi-download"></i></button>
                 </a>
             </div>
 
@@ -1508,7 +1546,7 @@ function getLogoPage(){
                 <img src="/imgs/Logga RAD ruta.png" alt="Mindre logga i kvadrat för Riksorganisationen Auktoriserade Dramapedagoger" height="80">
                 <br>
                 <a href="/imgs/Logga RAD ruta.png" download="Logga RAD">
-                    <button class="function-btn">Ladda ner <i class="bi bi-download"></i></button>
+                    <button class="function">Ladda ner <i class="bi bi-download"></i></button>
                 </a>
             </div>
        </div>`;
@@ -1638,6 +1676,8 @@ document.addEventListener('click', function(event) {
         console.log('Kopierad kod:', codeText);
         return;
     }
+
+    //Kontrollera om det som klickades är en close-alert
     else if(event.target.classList.contains('close-alert')){
         console.log("du tröck på en knapp");
         const alertElement = event.target.closest('.alert');
