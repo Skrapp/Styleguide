@@ -1,56 +1,4 @@
-// Sidbyggare - bygger sidor från konfiguration istället för repeterad HTML
-function buildPage(config) {
-    let html = `<h1>${config.title}</h1>`;
-    html += `<p>${config.description}</p>`;
-    
-    if (config.image) {
-        html += `<img class="example-img" src="${config.image.src}" alt="${config.image.alt}">`;
-    }
-    
-    if (config.codeExamples && config.codeExamples.length > 0) {
-        html += `<h2>Kom igång</h2>`;
-        html += `<p>${config.getStartedText || 'För att komma igång inkludera detta i projektet'}</p>`;
-        html += `<div class="code-container">`;
-        
-        config.codeExamples.forEach(example => {
-            html += `<div class="code-block">`;
-            html += `<p><b>${example.label}</b></p>`;
-            html += `<pre><code>${example.code}</code></pre>`;
-            html += `<button class="code-btn">Kopiera kod</button>`;
-            html += `</div>`;
-        });
-        
-        html += `</div>`;
-    }
-    
-    if (config.usageHtml && (Array.isArray(config.usageHtml) ? config.usageHtml.length > 0 : true)) {
-        html += `<h2>Användning</h2>`;
-        html += `<p>${config.usageIntroText || 'Nedan visas exempel på hur de olika elementen används och ser ut i nuvarande webbläsare.'}</p>`;
-
-        if (Array.isArray(config.usageHtml)) {
-            config.usageHtml.forEach(section => {
-                html += `<div class="usage-container">`
-                if (section.title) {
-                    html += `<h3>${section.title}</h3>`;
-                }
-                if (section.element) {
-                    html += section.element;
-                }
-                if (section.description) {
-                    html += `<div class="usage-description">${section.description}</div>`;
-                }
-                html += `</div>`
-            });
-        } else {
-            html += config.usageHtml;
-        }
-    }
-    
-    return html;
-}
-
 // ============ Page Configs ============
-
 const textPageConfig = {
     title: 'Rubriker och text',
     description: 'Dessa typsnitt och storlekar används över alla RAD:s webbplattformar. De typsnitt som används är "Raleway" och "Oswald". Båda hämtas från <a href="https://fonts.google.com/" target="_blank"> Google APIs </a>. Om typsnitten inte funkar ska det falla tillbaka till "sans-serif"',
@@ -156,7 +104,7 @@ button:hover {
         {
             title: 'Knappar',
             element: `<button>Klicka mig</button>`,
-            description: `<p>Knappar används för flertalet olika situationer, så som formulär eller Call-to-Action element. För mer specifika situationer <a href="/#/button">läs mer här.</a></p>
+            description: `<p>Knappar används för flertalet olika situationer, så som formulär eller Call-to-Action element. För mer specifika situationer <a href="#/web-components/button">läs mer här.</a></p>
                           <p>Texten i knappar ska vara kort och tydlig, maximalt tre ord eller 15 tecken.</p>
                           <p>En knapp kan aktivera en konfirmationstext om användaren behöver bli informerad att något skett. En konfirmationstext kan vara att ett text kopierats eller en fil laddats ner. 
                           Konfirmationstexten ska tydligt beskriva vad som skett. Använd klassen <code>btn-confirmation</code> på konfirmationstexten.</p>`
@@ -687,7 +635,7 @@ nav a:focus-within {
         {
             title:`Menyn`,
             element: `<nav>
-                    <img   src="/imgs/Logga RAD ruta.png" alt="RAD logga" height="70">
+                    <img src="/imgs/Logga RAD ruta.png" alt="RAD logga" height="70">
                     <a href="#menu">Simpel länk</a>
 
                     <div class="dropdown">
@@ -716,7 +664,7 @@ nav a:focus-within {
                     <a href="#simple">Simpel länk</a>
                     <a href="#simple">Simpel länk</a>
                 </nav>`,
-            description: `<p>En simple länk används om sidan inte har några viktiga undersidor</p>
+            description: `<p>En simpel länk används om sidan inte har några viktiga undersidor</p>
                 <p>Simpla länkar behöver inga speciella klasser för att fungera.</p>`
 
         },
@@ -733,8 +681,8 @@ nav a:focus-within {
                     </div>
                 </nav>`,
             description: `<p>Gardin element används när det finns en eller flera undersidor till en sida.</p>
-            <p>För att implementera används klassen <code>dropbox</code> på hela elementet, 
-            klassen <code>dropbtn</code> på länken med högst hiarki och 
+            <p>För att implementera används klassen <code>dropdown</code> på hela elementet, 
+            klassen <code>dropbtn</code> på länken med högst hierarki och 
             klassen <code>dropdown-content</code> på elementet som innehåller alla undersidor.</p>`
         },
     ]
@@ -879,7 +827,7 @@ const colorSchemePageConfig = {
                             </tr>
                             <tr>
                                 <td>rgb(185, 52, 52)</td>
-                                <td>--negative-color-btn</td>
+                                <td>--negative-color</td>
                                 <td style="background-color: var(--negative-color-btn); min-width: 4em;"></td>
                                 <td>En färg när knappar med avbrytande funktionalitet</td>
                             </tr>
@@ -891,7 +839,7 @@ const colorSchemePageConfig = {
                             </tr>
                             <tr>
                                 <td>rgb(131, 37, 37)</td>
-                                <td>--negative-color-btn-darker</td>
+                                <td>--negative-color-darker</td>
                                 <td style="background-color: var(--negative-color-btn-darker); min-width: 4em;"></td>
                                 <td>En färg för knappar med färgen <code>--negative-color-btn</code> hovras över</td>
                             </tr>
@@ -899,9 +847,7 @@ const colorSchemePageConfig = {
                       </table>`,
             description: ''
         }
-    ]
-                
-    
+    ]  
 };
 
 const formPageConfig = {
@@ -1375,7 +1321,7 @@ const panelPageConfig = {
 &lt;/div&gt;
 
 /* Panel med bild */
-&lt;div class=&quot;panel image-panel style=&quot;background-color: eventuell bakgrundsfärg;&quot;&gt;
+&lt;div class=&quot;panel image-panel&quot; style=&quot;background-color: eventuell bakgrundsfärg;&quot;&gt;
     &lt;img src=&quot;bild.jpg&quot; alt=&quot;Beskrivning av bilden&quot;&gt;
     &lt;div class=&quot;panel-content&quot;&gt;
         /* Innehåll i panel */
@@ -1437,7 +1383,7 @@ const panelPageConfig = {
                     <div class="panel-content">
                         <h2>En viktig titel</h2>
                         <p>Och en viktig text. Texten beskriver roliga ting kring något som är passande. Texten kan
-                         ge info eller vara en call to action för att ge användaren anledninga 
+                         ge info eller vara en call to action för att ge användaren anledning 
                          att klicka sig vidare.</p>
                         <button class="button">Här är knappen</button>
                     </div>
@@ -1456,10 +1402,10 @@ const panelPageConfig = {
                     </div>
                 </div>
             </div>`,
-            description: `<p>En panel används gör att grupper sektioner, kan vara för att dela in 
-            information i mindre block för att göra det mer läsbart eller definer ett call-to-action block.</p>
+            description: `<p>En panel används gör att gruppera element, kan vara för att dela in 
+            information i mindre block för att göra det mer läsbart eller definiera ett call-to-action block.</p>
 
-            <p>Standard har panelen ingen bakgrundsfärg, men den kan läggas till genom att inkludera en inline style, 
+            <p>Standard har panelen ingen bakgrundsfär. En bakgrundsfärg kan läggas till genom att inkludera en inline-styling på panel container, 
             t.ex. <code>style="background-color: var(--secondary-color);"</code>, använd främst primary-color, 
             secondary-color, accent-color och neutral-color.</p>
             
@@ -1479,7 +1425,7 @@ const panelPageConfig = {
                     </div>
                 </div>`,
             description: `<p>En panel med bild används för att ge en viss visuell effekt eller för att 
-            belysa specifikt innehåll. Passande för call to actions eller kortare inforrmationstexter.</p>
+            belysa specifikt innehåll. Passande för call to actions eller kortare informationstexter.</p>
             
             <p>Denna panel använder en div med klasserna <code>panel</code> och <code>image-panel</code>. 
             Inuti denna så finns bilden och ytterligare en div med klassen <code>panel-content</code>, i den ligger 
@@ -1521,7 +1467,7 @@ const panelPageConfig = {
             </div>`,
             description: `<p>En rutnätsstruktur används när flera paneler ska listas.</p>
 
-            <p>Använd klassen <code>panel-grid</code> på förälder elementet och lägg panelerna inuti.</code> `
+            <p>Använd klassen <code>panel-grid</code> på förälder elementet och lägg panelerna inuti.</p>`
         }
     ]
 };
@@ -1614,7 +1560,7 @@ const loadingPageConfig = {
     ]
 };
 
-//  ========== Pages ============
+//  ========== Overview ==========
 
 const designGuidelinesPages = [
     {
@@ -1692,6 +1638,58 @@ const webComponentsPages = [
     }
 ];
 
+//  ========= Page builder =========
+
+function buildPage(config) {
+    let html = `<h1>${config.title}</h1>`;
+    html += `<p>${config.description}</p>`;
+    
+    if (config.image) {
+        html += `<img class="example-img" src="${config.image.src}" alt="${config.image.alt}">`;
+    }
+    
+    if (config.codeExamples && config.codeExamples.length > 0) {
+        html += `<h2>Kom igång</h2>`;
+        html += `<p>${config.getStartedText || 'För att komma igång inkludera detta i projektet'}</p>`;
+        html += `<div class="code-container">`;
+        
+        config.codeExamples.forEach(example => {
+            html += `<div class="code-block">`;
+            html += `<p><b>${example.label}</b></p>`;
+            html += `<pre><code>${example.code}</code></pre>`;
+            html += `<button class="code-btn">Kopiera kod</button>`;
+            html += `</div>`;
+        });
+        
+        html += `</div>`;
+    }
+    
+    if (config.usageHtml && (Array.isArray(config.usageHtml) ? config.usageHtml.length > 0 : true)) {
+        html += `<h2>Användning</h2>`;
+        html += `<p>${config.usageIntroText || 'Nedan visas exempel på hur de olika elementen används och ser ut i nuvarande webbläsare.'}</p>`;
+
+        if (Array.isArray(config.usageHtml)) {
+            config.usageHtml.forEach(section => {
+                html += `<div class="usage-container">`
+                if (section.title) {
+                    html += `<h3>${section.title}</h3>`;
+                }
+                if (section.element) {
+                    html += section.element;
+                }
+                if (section.description) {
+                    html += `<div class="usage-description">${section.description}</div>`;
+                }
+                html += `</div>`
+            });
+        } else {
+            html += config.usageHtml;
+        }
+    }
+    
+    return html;
+}
+
 function renderOverviewPage(title, intro, pages) {
     let html = `<h1>${title}</h1>`;
     html += `<p>${intro}</p>`;
@@ -1711,6 +1709,8 @@ function renderOverviewPage(title, intro, pages) {
     html += `</div>`;
     return html;
 }
+
+//  ========== Pages ============
 
 function getHomePage(){
     return `<h1>Designguide RAD</h1>
@@ -1922,4 +1922,3 @@ document.addEventListener('submit', function(event) {
 
     form.replaceWith(successElement);
 });
-
